@@ -1,0 +1,32 @@
+# Syntax Colouring Map For INA228
+
+
+# Data types (KEYWORD1)
+INA228	KEYWORD1
+
+
+# Methods and Functions (KEYWORD2)
+begin	KEYWORD2
+isConnected	KEYWORD2
+getAddress	KEYWORD2
+
+getBusVoltage	KEYWORD2
+getShuntVoltage	KEYWORD2
+getCurrent	KEYWORD2
+getPower	KEYWORD2
+getTemperature	KEYWORD2
+
+getBusVoltage_mV	KEYWORD2
+getShuntVoltage_mV	KEYWORD2
+getCurrent_mA	KEYWORD2
+getPower_mW	KEYWORD2
+
+getBusVoltage_uV	KEYWORD2
+getShuntVoltage_uV	KEYWORD2
+getCurrent_uA	KEYWORD2
+getPower_uW	KEYWORD2
+
+
+# Constants (LITERAL1)
+INA228_LIB_VERSION	LITERAL1
+
