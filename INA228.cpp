@@ -74,7 +74,7 @@ float INA228::getShuntVoltage()
 float INA228::getCurrent()
 {
   uint32_t value = _readRegister(INA228_CURRENT, 3);
-  
+
   //  PAGE 31 (8.1.2)
   float shunt_cal = 13107.2e6 * _current_LSB * _shunt;
   //  depends on ADCRANGE in INA228_CONFIG register.
@@ -194,7 +194,7 @@ bool INA228::setMode(uint8_t mode)
   uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
   value &= 0x0FFF;  // ~(0x0F << 12);
   value |= (mode << 12);
-  _writeRegister(INA228_CONFIG, value);
+  _writeRegister(INA228_ADC_CONFIG, value);
   return true;
 }
 
@@ -210,7 +210,7 @@ bool INA228::setBusVoltageConversionTime(uint8_t bvct)
   uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
   value &= 0xF1FF;  // ~(0x07 << 9);
   value |= (bvct << 9);
-  _writeRegister(INA228_CONFIG, value);
+  _writeRegister(INA228_ADC_CONFIG, value);
   return true;
 }
 
@@ -226,7 +226,7 @@ bool INA228::setShuntVoltageConversionTime(uint8_t svct)
   uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
   value &= 0xFE3F;  // ~(0x07 << 6);
   value |= (svct << 6);
-  _writeRegister(INA228_CONFIG, value);
+  _writeRegister(INA228_ADC_CONFIG, value);
   return true;
 }
 
@@ -242,7 +242,7 @@ bool INA228::setTemperatureConversionTime(uint8_t tct)
   uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
   value &= 0xFFC7;  // ~(0x07 << 3);
   value |= (tct << 3);
-  _writeRegister(INA228_CONFIG, value);
+  _writeRegister(INA228_ADC_CONFIG, value);
   return true;
 }
 
@@ -258,7 +258,7 @@ bool INA228::setAverage(uint8_t avg)
   uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
   value &= 0xF1FF;
   value |= avg;
-  _writeRegister(INA228_CONFIG, value);
+  _writeRegister(INA228_ADC_CONFIG, value);
   return true;
 }
 
@@ -267,7 +267,6 @@ uint8_t INA228::getAverage()
   uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
   return value & 0x0010;
 }
-
 
 
 ////////////////////////////////////////////////////////
@@ -282,6 +281,65 @@ int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
   _shunt = shunt;
   _current_LSB = _maxCurrent * 1.9073486328125e-6;  //  pow(2, -19);
   return 0;
+}
+
+float INA228::getMaxCurrent()
+{
+  return _maxCurrent;
+}
+
+float INA228::getShunt()
+{
+  return _shunt;
+}
+
+
+////////////////////////////////////////////////////////
+//
+//  SHUNT TEMPERATURE COEFFICIENT REGISTER 3
+//
+bool INA228::setShuntTemperatureCoefficent(uint16_t ppm)
+{
+  if (ppm > 16383) return false;
+  _writeRegister(INA228_SHUNT_TEMP_CO, ppm);
+  return true;
+}
+
+uint16_t INA228::getShuntTemperatureCoefficent()
+{
+  uint16_t value = _readRegister(INA228_SHUNT_TEMP_CO, 2);
+  return value;
+}
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////
+//
+//  MANUFACTURER and ID REGISTER 3E/3F
+//
+bool INA228::getManufacturer()
+{
+  uint16_t value = _readRegister(INA228_MANUFACTURER, 2);
+  return value;
+}
+
+uint16_t INA228::getDieID()
+{
+  uint16_t value = _readRegister(INA228_DEVICE_ID, 2);
+  return (value >> 4) & 0xFFF0;
+}
+
+uint16_t INA228::getRevision()
+{
+  uint16_t value = _readRegister(INA228_DEVICE_ID, 2);
+  return value & 0x0F;
 }
 
 

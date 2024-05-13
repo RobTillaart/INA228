@@ -139,7 +139,7 @@ public:
   uint8_t  getConversionDelay();
   void     setTemperatureCompensation(bool on);
   bool     getTemperatureCompensation();
-  //  flag = false => 164 mV, true => 41 mV 
+  //  flag = false => 164 mV, true => 41 mV
   void     setADCRange(bool flag);
   bool     getADCRange();
 
@@ -159,10 +159,35 @@ public:
 
   //
   //  SHUNT CALIBRATION REGISTER 2
-  //  read datasheet for details.
-  int      setMaxCurrentShunt(float maxCurrent = 10.0, float shunt = 0.015);
+  //  read datasheet for details. use with care.
+  //  maxCurrent <= 10, shunt > 0.005.
+  int      setMaxCurrentShunt(float maxCurrent, float shunt);
   bool     isCalibrated()    { return _current_LSB != 0.0; };
+  float    getMaxCurrent();
+  float    getShunt();
 
+
+  //
+  //  SHUNT TEMPERATURE COEFFICIENT REGISTER 3
+  //  read datasheet for details. use with care.
+  //  ppm = 0..16383.
+  bool     setShuntTemperatureCoefficent(uint16_t ppm = 0);
+  uint16_t getShuntTemperatureCoefficent();
+
+
+
+
+
+
+
+
+
+  //
+  //  MANUFACTURER and ID REGISTER 3E/3F
+  //
+  bool     getManufacturer();
+  uint16_t getDieID();
+  uint16_t getRevision();
 
 
   ///////////////////

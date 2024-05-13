@@ -217,7 +217,37 @@ to elaborate
 
 #### Shunt Calibration
 
+To elaborate
 
+- **int setMaxCurrentShunt(float maxCurrent, float shunt)**
+- **bool isCalibrated()** is valid calibration value.
+- **float getMaxCurrent()** return set value
+- **float getShunt()** return set value
+
+
+#### Shunt temperature coefficient
+
+To elaborate
+
+- **bool setShuntTemperatureCoefficent(uint16_t ppm = 0)** ppm = 0..16383.
+- **uint16_t getShuntTemperatureCoefficent()** return set value.
+
+
+#### Diagnose alert
+
+To elaborate
+
+
+#### Limits
+
+To elaborate
+
+
+#### Manufacturer and ID
+
+- **bool getManufacturer()** idem.
+- **uint16_t getDieID()** idem.
+- **uint16_t getRevID()** idem.
 
 
 ## Future
