@@ -102,21 +102,92 @@ float INA228::getTemperature()
 
 
 //  PAGE 26 + 8.1.2
-//  NEED 40 bits == 5 bytes.
-// float INA228::getEnergy()
-// {
-  // uint32_t value = _readRegister(INA228_ENERGY, 5);
-  //  PAGE 31 (8.1.2)
-  // return value * 16 x 3.2 x _current_LSB;
-// }
+float INA228::getEnergy()
+{
+  uint32_t value = _readRegisterF(INA228_ENERGY, 5);
+   PAGE 31 (8.1.2)
+  return value * 16 x 3.2 x _current_LSB;
+}
 
 
-// float INA228::getCharge()
-// {
-  // uint32_t value = _readRegister(INA228_CHARGE, 5);
-  //  PAGE 32 (8.1.2)
-  // return value * _current_LSB;
-// }
+float INA228::getCharge()
+{
+  uint32_t value = _readRegisterF(INA228_CHARGE, 5);
+   PAGE 32 (8.1.2)
+  return value * _current_LSB;
+}
+
+
+////////////////////////////////////////////////////////
+//
+//  CONFIG REGISTER
+//
+void INA228::reset()
+{
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  value |= 0x8000;
+  _writeRegister(INA228_CONFIG, value);
+}
+
+bool INA228::resetAccumulation(uint8_t val)
+{
+  if (val > 1) return false;
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  value &= ~0x4000;
+  if (val == 1) value |= 0x4000;
+  _writeRegister(INA228_CONFIG, value);
+}
+
+void INA228::setConversionDelay(uint8_t steps)
+{
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  value &= ~0x3FC0;
+  value |= (steps << 6);
+  _writeRegister(INA228_CONFIG, value);
+}
+
+uint8_t INA228::getConversionDelay()
+{
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  return (value >> 6) & 0xFF;
+}
+
+void INA228::setTemperatureCompensation(bool on)
+{
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  value &= ~0x0020;
+  if (on) value |= 0x0020;
+  _writeRegister(INA228_CONFIG, value);
+}
+
+bool INA228::getTemperatureCompensation()
+{
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  return value & 0x0020;
+}
+
+void INA228::setADCRange(bool flag)
+{
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  value &= ~0x0010;
+  if (flag) value |= 0x0010;
+  _writeRegister(INA228_CONFIG, value);
+}
+
+bool INA228::getADCRange()
+{
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  return value & 0x0010;
+}
+
+
+////////////////////////////////////////////////////////
+//
+//  CONFIG REGISTER
+//
+
+
+
 
 
 
@@ -136,6 +207,23 @@ uint32_t INA228::_readRegister(uint8_t reg, uint8_t bytes)
   {
     value <<= 8;
     value |= _wire->read();
+  }
+  return value;
+}
+
+
+float INA228::_readRegisterF(uint8_t reg, uint8_t bytes)
+{
+  _wire->beginTransmission(_address);
+  _wire->write(reg);
+  _wire->endTransmission();
+
+  _wire->requestFrom(_address, (uint8_t)bytes);
+  float value = 0;
+  for ( int i = 0; i < bytes; i++)
+  {
+    value *= 256.0;
+    value += _wire->read();
   }
   return value;
 }

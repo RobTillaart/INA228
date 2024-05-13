@@ -15,17 +15,22 @@ getShuntVoltage	KEYWORD2
 getCurrent	KEYWORD2
 getPower	KEYWORD2
 getTemperature	KEYWORD2
+getEnergy	KEYWORD2
+getCharge	KEYWORD2
 
 getBusVoltage_mV	KEYWORD2
 getShuntVoltage_mV	KEYWORD2
 getCurrent_mA	KEYWORD2
 getPower_mW	KEYWORD2
+getEnergy_mJ	KEYWORD2
+getCharge_mC	KEYWORD2
 
 getBusVoltage_uV	KEYWORD2
 getShuntVoltage_uV	KEYWORD2
 getCurrent_uA	KEYWORD2
 getPower_uW	KEYWORD2
-
+getEnergy_uJ	KEYWORD2
+getCharge_uC	KEYWORD2
 
 # Constants (LITERAL1)
 INA228_LIB_VERSION	LITERAL1

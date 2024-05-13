@@ -117,10 +117,8 @@ Also the value is not meaningful if there is no shunt connected.
 - **float getBusVoltage()** idem. in volts. Max 36 Volt.
 - **float getCurrent()** is the current through the shunt in Ampere.
 - **float getPower()** is the current x BusVoltage in Watt.
-- **bool isConversionReady()** returns true if conversion ready flag is set.
-- **bool waitConversionReady(uint32_t timeout = INA228_MAX_WAIT_MS)** 
-active waiting for ready flag.
-Polling for max timeout time, default 600 milliseconds, for wake up time.
+- **float getEnergy()** return Joule (elaborate).
+- **float getCharge()** return Coulomb (elaborate).
 
 The library has helper functions to convert above output to a more appropriate scale of units.
 
@@ -130,6 +128,8 @@ Helper functions for the milli scale.
 - **float getShuntVoltage_mV()** idem, in milliVolts.
 - **float getCurrent_mA()** idem, in milliAmpere.
 - **float getPower_mW()** idem, in milliWatt.
+- **float getEnergy_mJ()** idem, milliJoule.
+- **float getCharge_mC()** idem, milliCoulomb.
 
 Helper functions for the micro scale.
 
@@ -137,6 +137,8 @@ Helper functions for the micro scale.
 - **float getShuntVoltage_uV()** idem, in microVolts.
 - **float getCurrent_uA()** idem, in microAmpere.
 - **float getPower_uW()** idem, in microWatt.
+- **float getEnergy_uJ()** idem, microJoule.
+- **float getCharge_uC()** idem, microCoulomb.
 
 
 TO ELABORATE
@@ -156,16 +158,16 @@ TO ELABORATE
 
 #### Should
 
-- improve unit tests
-
 
 #### Could
 
+- improve unit tests
 - clean up magic numbers in the code
-
 
 #### Won't
 
+- cache registers for performance (first get it working).
+- 
 
 ## Support
 

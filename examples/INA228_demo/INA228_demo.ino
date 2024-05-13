@@ -23,9 +23,9 @@ void setup()
   Wire.begin();
   if (!INA.begin() )
   {
-    Serial.println("could not connect. Fix and Reboot");
+    Serial.println("Could not connect. Fix and Reboot");
+    while(1);
   }
-  //  INA.setMaxCurrentShunt(1, 0.002);
 }
 
 
