@@ -148,11 +148,11 @@ public:
   //  read datasheet for details.
   bool     setMode(uint8_t mode = INA228_MODE_CONT_TEMP_BUS_SHUNT);
   uint8_t  getMode();
-  bool     setBusVoltageConversionTime(uint8_t bvct = INA226_1052_us);
+  bool     setBusVoltageConversionTime(uint8_t bvct = INA228_1052_us);
   uint8_t  getBusVoltageConversionTime();
-  bool     setShuntVoltageConversionTime(uint8_t svct = INA226_1052_us);
+  bool     setShuntVoltageConversionTime(uint8_t svct = INA228_1052_us);
   uint8_t  getShuntVoltageConversionTime();
-  bool     setTemperatureConversionTime(uint8_t tct = INA226_1052_us);
+  bool     setTemperatureConversionTime(uint8_t tct = INA228_1052_us);
   uint8_t  getTemperatureConversionTime();
   bool     setAverage(uint8_t avg = INA228_1_SAMPLE);
   uint8_t  getAverage();
@@ -160,8 +160,8 @@ public:
   //
   //  SHUNT CALIBRATION REGISTER 2
   //  read datasheet for details.
-
-
+  int      setMaxCurrentShunt(float maxCurrent = 10.0, float shunt = 0.015);
+  bool     isCalibrated()    { return _current_LSB != 0.0; };
 
 
 

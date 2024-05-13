@@ -274,8 +274,15 @@ uint8_t INA228::getAverage()
 //
 //  SHUNT CALIBRATION REGISTER 2
 //
-
-
+int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
+{
+  if (maxCurrent > 10) return -1;
+  if (shunt < 0.005) return -2;
+  _maxCurrent = maxCurrent;
+  _shunt = shunt;
+  _current_LSB = _maxCurrent * 1.9073486328125e-6;  //  pow(2, -19);
+  return 0;
+}
 
 
 ////////////////////////////////////////////////////////
