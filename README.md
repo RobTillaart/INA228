@@ -141,7 +141,83 @@ Helper functions for the micro scale.
 - **float getCharge_uC()** idem, microCoulomb.
 
 
-TO ELABORATE
+#### Configuration
+
+to elaborate
+
+- **void reset()**
+- **bool setAccumulation(uint8_t val)** val: 0 == normal operation,  1 = clear registers
+- **bool getAccumulation()** return set value.
+- **void setConversionDelay(uint8_t steps)**  Conversion delay in 0..255 steps of 2 ms
+- **uint8_t getConversionDelay()** return set value.
+- **void setTemperatureCompensation(bool on)**
+- **bool getTemperatureCompensation()** return set value.
+- **void setADCRange(bool flag)** flag = false => 164 mV, true => 41 mV
+- **bool getADCRange()** return set value.
+
+#### Configuration ADC
+
+to elaborate
+
+- **bool setMode(uint8_t mode = INA228_MODE_CONT_TEMP_BUS_SHUNT)**
+- **uint8_t getMode()** return set value.
+
+|  MODE                           |  value  |  notes  |
+|:-------------------------------:|:-------:|:--------|
+| INA228_MODE_SHUTDOWN            |   0x00  |
+| INA228_MODE_TRIG_BUS            |   0x01  |
+| INA228_MODE_TRIG_SHUNT          |   0x02  |
+| INA228_MODE_TRIG_BUS_SHUNT      |   0x03  |
+| INA228_MODE_TRIG_TEMP           |   0x04  |
+| INA228_MODE_TRIG_TEMP_BUS       |   0x05  |
+| INA228_MODE_TRIG_TEMP_SHUNT     |   0x06  |
+| INA228_MODE_TRIG_TEMP_BUS_SHUNT |   0x07  |
+| INA228_MODE_SHUTDOWN2           |   0x08  |
+| INA228_MODE_CONT_BUS            |   0x09  |
+| INA228_MODE_CONT_SHUNT          |   0x0A  |
+| INA228_MODE_CONT_BUS_SHUNT      |   0x0B  |
+| INA228_MODE_CONT_TEMP           |   0x0C  |
+| INA228_MODE_CONT_TEMP_BUS       |   0x0D  |
+| INA228_MODE_CONT_TEMP_SHUNT     |   0x0E  |
+| INA228_MODE_CONT_TEMP_BUS_SHUNT |   0x0F  |
+
+- **bool setBusVoltageConversionTime(uint8_t bvct = INA226_1052_us)**
+- **uint8_t getBusVoltageConversionTime()** return set value.
+- **bool setShuntVoltageConversionTime(uint8_t svct = INA226_1052_us)**
+- **uint8_t getShuntVoltageConversionTime()** return set value.
+- **bool setTemperatureConversionTime(uint8_t tct = INA226_1052_us)**
+- **uint8_t getTemperatureConversionTime()** return set value.
+
+|  TIMING             |  value  |  notes  |
+|:-------------------:|:-------:|:--------|
+| INA228_50_us        |    0    |
+| INA228_84_us        |    1    |
+| INA228_150_us       |    2    |
+| INA228_280_us       |    3    |
+| INA228_540_us       |    4    |
+| INA228_1052_us      |    5    |
+| INA228_2074_us      |    6    |
+| INA228_4120_us      |    7    |
+
+
+- **bool setAverage(uint8_t avg = INA228_1_SAMPLE)**
+- **uint8_t getAverage()** return set value.
+
+|  AVERAGE            |  value  |  notes  |
+|:-------------------:|:-------:|:--------|
+| INA228_1_SAMPLE     |    0    |
+| INA228_4_SAMPLES    |    1    |
+| INA228_16_SAMPLES   |    2    |
+| INA228_64_SAMPLES   |    3    |
+| INA228_128_SAMPLES  |    4    |
+| INA228_256_SAMPLES  |    5    |
+| INA228_512_SAMPLES  |    6    |
+| INA228_1024_SAMPLES |    7    |
+
+
+#### Shunt Calibration
+
+
 
 
 ## Future

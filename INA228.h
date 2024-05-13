@@ -78,14 +78,14 @@ enum ina228_average_enum {
 
 //  for Bus, shunt and temperature conversion timing.
 enum ina228_timing_enum {
-    INA226_50_us   = 0,
-    INA226_84_us   = 1,
-    INA226_150_us  = 2,
-    INA226_280_us  = 3,
-    INA226_540_us  = 4,
-    INA226_1052_us = 5,
-    INA226_2074_us = 6,
-    INA226_4120_us = 7
+    INA228_50_us   = 0,
+    INA228_84_us   = 1,
+    INA228_150_us  = 2,
+    INA228_280_us  = 3,
+    INA228_540_us  = 4,
+    INA228_1052_us = 5,
+    INA228_2074_us = 6,
+    INA228_4120_us = 7
 };
 
 
