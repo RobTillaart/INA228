@@ -149,9 +149,9 @@ TO ELABORATE
 
 #### Must
 
+- get hardware to test.
 - update documentation.
 - update functionality.
-- get hardware to test.
 - test a lot.
 - write examples.
 - keep in sync with INA226 where possible.
@@ -167,7 +167,8 @@ TO ELABORATE
 #### Won't
 
 - cache registers for performance (first get it working).
-- 
+  - reset should reread all cached values...
+
 
 ## Support
 

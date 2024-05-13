@@ -41,6 +41,55 @@
 #define INA228_DEVICE_ID            0x3F    //  16   R-
 
 
+//  for setMode() and getMode()
+enum ina228_mode_enum {
+  INA228_MODE_SHUTDOWN            = 0x00,
+  INA228_MODE_TRIG_BUS            = 0x01,
+  INA228_MODE_TRIG_SHUNT          = 0x02,
+  INA228_MODE_TRIG_BUS_SHUNT      = 0x03,
+  INA228_MODE_TRIG_TEMP           = 0x04,
+  INA228_MODE_TRIG_TEMP_BUS       = 0x05,
+  INA228_MODE_TRIG_TEMP_SHUNT     = 0x06,
+  INA228_MODE_TRIG_TEMP_BUS_SHUNT = 0x07,
+
+  INA228_MODE_SHUTDOWN2           = 0x08,
+  INA228_MODE_CONT_BUS            = 0x09,
+  INA228_MODE_CONT_SHUNT          = 0x0A,
+  INA228_MODE_CONT_BUS_SHUNT      = 0x0B,
+  INA228_MODE_CONT_TEMP           = 0x0C,
+  INA228_MODE_CONT_TEMP_BUS       = 0x0D,
+  INA228_MODE_CONT_TEMP_SHUNT     = 0x0E,
+  INA228_MODE_CONT_TEMP_BUS_SHUNT = 0x0F
+};
+
+
+//  for setAverage() and getAverage()
+enum ina228_average_enum {
+    INA228_1_SAMPLE     = 0,
+    INA228_4_SAMPLES    = 1,
+    INA228_16_SAMPLES   = 2,
+    INA228_64_SAMPLES   = 3,
+    INA228_128_SAMPLES  = 4,
+    INA228_256_SAMPLES  = 5,
+    INA228_512_SAMPLES  = 6,
+    INA228_1024_SAMPLES = 7
+};
+
+
+//  for Bus, shunt and temperature conversion timing.
+enum ina228_timing_enum {
+    INA226_50_us   = 0,
+    INA226_84_us   = 1,
+    INA226_150_us  = 2,
+    INA226_280_us  = 3,
+    INA226_540_us  = 4,
+    INA226_1052_us = 5,
+    INA226_2074_us = 6,
+    INA226_4120_us = 7
+};
+
+
+
 class INA228
 {
 public:
@@ -79,11 +128,12 @@ public:
   float    getCharge_uC()       { return getCharge()       * 1e6; };
 
   //
-  //  CONFIG REGISTER
+  //  CONFIG REGISTER 0
   //  read datasheet for details.
   void     reset();
   //  val: 0 == normal operation,  1 = clear registers
-  bool     resetAccumulation(uint8_t val);
+  bool     setAccumulation(uint8_t val);
+  bool     getAccumulation();
   //  Conversion delay in 0..255 steps of 2 ms
   void     setConversionDelay(uint8_t steps);
   uint8_t  getConversionDelay();
@@ -94,8 +144,23 @@ public:
   bool     getADCRange();
 
   //
-  //  CONFIG REGISTER
+  //  CONFIG ADC REGISTER 1
   //  read datasheet for details.
+  bool     setMode(uint8_t mode = INA228_MODE_CONT_TEMP_BUS_SHUNT);
+  uint8_t  getMode();
+  bool     setBusVoltageConversionTime(uint8_t bvct = INA226_1052_us);
+  uint8_t  getBusVoltageConversionTime();
+  bool     setShuntVoltageConversionTime(uint8_t svct = INA226_1052_us);
+  uint8_t  getShuntVoltageConversionTime();
+  bool     setTemperatureConversionTime(uint8_t tct = INA226_1052_us);
+  uint8_t  getTemperatureConversionTime();
+  bool     setAverage(uint8_t avg = INA228_1_SAMPLE);
+  uint8_t  getAverage();
+
+  //
+  //  SHUNT CALIBRATION REGISTER 2
+  //  read datasheet for details.
+
 
 
 

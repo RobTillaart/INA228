@@ -83,7 +83,6 @@ float INA228::getCurrent()
   return value * shunt_cal;
 }
 
-
 //  PAGE 26 + 8.1.2
 float INA228::getPower()
 {
@@ -92,7 +91,6 @@ float INA228::getPower()
   return value * 3.2 * _current_LSB;
 }
 
-
 //  PAGE25
 float INA228::getTemperature()
 {
@@ -100,27 +98,25 @@ float INA228::getTemperature()
   return value * 7.8125e-6;
 }
 
-
 //  PAGE 26 + 8.1.2
 float INA228::getEnergy()
 {
-  uint32_t value = _readRegisterF(INA228_ENERGY, 5);
-   PAGE 31 (8.1.2)
-  return value * 16 x 3.2 x _current_LSB;
+  float value = _readRegisterF(INA228_ENERGY, 5);
+  //  PAGE 31 (8.1.2)
+  return value * 16 * 3.2 * _current_LSB;
 }
-
 
 float INA228::getCharge()
 {
-  uint32_t value = _readRegisterF(INA228_CHARGE, 5);
-   PAGE 32 (8.1.2)
+  float value = _readRegisterF(INA228_CHARGE, 5);
+  //  PAGE 32 (8.1.2)
   return value * _current_LSB;
 }
 
 
 ////////////////////////////////////////////////////////
 //
-//  CONFIG REGISTER
+//  CONFIG REGISTER 0
 //
 void INA228::reset()
 {
@@ -129,13 +125,20 @@ void INA228::reset()
   _writeRegister(INA228_CONFIG, value);
 }
 
-bool INA228::resetAccumulation(uint8_t val)
+bool INA228::setAccumulation(uint8_t val)
 {
   if (val > 1) return false;
   uint16_t value = _readRegister(INA228_CONFIG, 2);
   value &= ~0x4000;
   if (val == 1) value |= 0x4000;
   _writeRegister(INA228_CONFIG, value);
+  return true;
+}
+
+bool INA228::getAccumulation()
+{
+  uint16_t value = _readRegister(INA228_CONFIG, 2);
+  return (value & 0x4000) > 0;
 }
 
 void INA228::setConversionDelay(uint8_t steps)
@@ -183,10 +186,94 @@ bool INA228::getADCRange()
 
 ////////////////////////////////////////////////////////
 //
-//  CONFIG REGISTER
+//  CONFIG ADC REGISTER 1
 //
+bool INA228::setMode(uint8_t mode)
+{
+  if (mode > 0x0F) return false;
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  value &= 0x0FFF;  // ~(0x0F << 12);
+  value |= (mode << 12);
+  _writeRegister(INA228_CONFIG, value);
+  return true;
+}
+
+uint8_t INA228::getMode()
+{
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  return (value >> 12) & 0x0F;
+}
+
+bool INA228::setBusVoltageConversionTime(uint8_t bvct)
+{
+  if (bvct > 7) return false;
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  value &= 0xF1FF;  // ~(0x07 << 9);
+  value |= (bvct << 9);
+  _writeRegister(INA228_CONFIG, value);
+  return true;
+}
+
+uint8_t INA228::getBusVoltageConversionTime()
+{
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  return (value >> 9) & 0x07;
+}
+
+bool INA228::setShuntVoltageConversionTime(uint8_t svct)
+{
+  if (svct > 7) return false;
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  value &= 0xFE3F;  // ~(0x07 << 6);
+  value |= (svct << 6);
+  _writeRegister(INA228_CONFIG, value);
+  return true;
+}
+
+uint8_t INA228::getShuntVoltageConversionTime()
+{
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  return (value >> 6) & 0x07;
+}
+
+bool INA228::setTemperatureConversionTime(uint8_t tct)
+{
+  if (tct > 7) return false;
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  value &= 0xFFC7;  // ~(0x07 << 3);
+  value |= (tct << 3);
+  _writeRegister(INA228_CONFIG, value);
+  return true;
+}
+
+uint8_t INA228::getTemperatureConversionTime()
+{
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  return (value >> 3) & 0x07;
+}
+
+bool INA228::setAverage(uint8_t avg)
+{
+  if (avg > 7) return false;
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  value &= 0xF1FF;
+  value |= avg;
+  _writeRegister(INA228_CONFIG, value);
+  return true;
+}
+
+uint8_t INA228::getAverage()
+{
+  uint16_t value = _readRegister(INA228_ADC_CONFIG, 2);
+  return value & 0x0010;
+}
 
 
+
+////////////////////////////////////////////////////////
+//
+//  SHUNT CALIBRATION REGISTER 2
+//
 
 
 
