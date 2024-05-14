@@ -1,9 +1,9 @@
 #pragma once
 //    FILE: INA228.h
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 //    DATE: 2024-05-09
-// PURPOSE: Arduino library for INA228 power sensor
+// PURPOSE: Arduino library for INA228 current and power sensor
 //     URL: https://github.com/RobTillaart/INA228
 //
 //  Read the datasheet for the details
@@ -13,7 +13,7 @@
 #include "Wire.h"
 
 
-#define INA228_LIB_VERSION          "0.1.0"
+#define INA228_LIB_VERSION          "0.1.1"
 
 
 //  TODO MOVE TO CPP  CHECK DATASHEET.
@@ -176,15 +176,31 @@ public:
 
   //
   //  DIAGNOSE ALERT REGISTER 11  (0x0B)
-  //  read datasheet for details. use with care.
-  //  TODO
+  //  read datasheet for details. use with care.4
+  //  TODO define Diagnose bit fields.
+  void     setDiagnoseAlert(uint16_t flags);
+  void     setDiagnoseAlertBit(uint8_t bit);
+  void     clrDiagnoseAlertBit(uint8_t bit);
+  uint16_t getDiagnoseAlert();
+  uint16_t getDiagnoseAlertBit(uint8_t bit);
 
 
   //
   //  THRESHOLD AND LIMIT REGISTERS 12-17
   //  read datasheet for details. use with care.
   //  TODO
-
+  void     setShuntOvervoltageTH(uint16_t threshold);
+  uint16_t getShuntOvervoltageTH();
+  void     setShuntUndervoltageTH(uint16_t threshold);
+  uint16_t getShuntUndervoltageTH();
+  void     setBusOvervoltageTH(uint16_t threshold);
+  uint16_t getBusOvervoltageTH();
+  void     setBusUndervoltageTH(uint16_t threshold);
+  uint16_t getBusUndervoltageTH();
+  void     setTemperatureOverLimitTH(uint16_t threshold);
+  uint16_t getTemperatureOverLimitTH();
+  void     setPowerOverLimitTH(uint16_t threshold);
+  uint16_t getPowerOverLimitTH();
 
 
   //

@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.1] - 2024-05-15
+- make functional complete
+  - add limit functions
+  - add threshold functions
+- minor edits
+
+
 ## [0.1.0] - 2024-05-10
 - initial version
 

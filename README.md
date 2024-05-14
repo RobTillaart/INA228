@@ -150,7 +150,7 @@ Helper functions for the micro scale.
 
 #### Configuration
 
-to elaborate
+To elaborate, read datasheet for details.
 
 - **void reset()**
 - **bool setAccumulation(uint8_t val)** val: 0 == normal operation,  1 = clear registers
@@ -164,7 +164,7 @@ to elaborate
 
 #### Configuration ADC
 
-to elaborate
+To elaborate, read datasheet for details.
 
 - **bool setMode(uint8_t mode = INA228_MODE_CONT_TEMP_BUS_SHUNT)**
 - **uint8_t getMode()** return set value.
@@ -224,7 +224,7 @@ to elaborate
 
 #### Shunt Calibration
 
-To elaborate
+To elaborate, read datasheet for details.
 
 - **int setMaxCurrentShunt(float maxCurrent, float shunt)**
 - **bool isCalibrated()** is valid calibration value.
@@ -234,7 +234,7 @@ To elaborate
 
 #### Shunt temperature coefficient
 
-To elaborate
+To elaborate, read datasheet for details.
 
 - **bool setShuntTemperatureCoefficent(uint16_t ppm = 0)** ppm = 0..16383.
 - **uint16_t getShuntTemperatureCoefficent()** return set value.
@@ -242,12 +242,31 @@ To elaborate
 
 #### Diagnose alert
 
-TODO
+To elaborate, read datasheet for details.
+
+- **void setDiagnoseAlert(uint16_t flags)** set all flags as bit mask.
+- **void setDiagnoseAlertBit(uint8_t bit)** set individual bit.
+- **void clrDiagnoseAlertBit(uint8_t bit)** clear individual bit.
+- **uint16_t getDiagnoseAlert()** return all flags as bit mask.
+- **uint16_t getDiagnoseAlertBit(uint8_t bit)** return individual bit.
 
 
 #### Threshold and Limits
 
-TODO
+To elaborate, read datasheet for details.
+
+- **void setShuntOvervoltageTH(uint16_t threshold)**
+- **uint16_t getShuntOvervoltageTH()**
+- **void setShuntUndervoltageTH(uint16_t threshold)**
+- **uint16_t getShuntUndervoltageTH()**
+- **void setBusOvervoltageTH(uint16_t threshold)**
+- **uint16_t getBusOvervoltageTH()**
+- **void setBusUndervoltageTH(uint16_t threshold)**
+- **uint16_t getBusUndervoltageTH()**
+- **void setTemperatureOverLimitTH(uint16_t threshold)**
+- **uint16_t getTemperatureOverLimitTH()**
+- **void setPowerOverLimitTH(uint16_t threshold)**
+- **uint16_t getPowerOverLimitTH()**
 
 
 #### Manufacturer and ID
@@ -272,6 +291,7 @@ TODO
 
 - write examples.
 - keep in sync with INA226 where possible.
+- fix TODO's in code.
 
 
 #### Could
