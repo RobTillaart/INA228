@@ -1,7 +1,7 @@
 //
 //    FILE: INA228_demo.ino
 //  AUTHOR: Rob Tillaart
-// PURPOSE: demo
+// PURPOSE: demo core functions
 //     URL: https://github.com/RobTillaart/INA228
 
 

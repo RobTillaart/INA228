@@ -33,7 +33,6 @@ getPower_uW	KEYWORD2
 getEnergy_uJ	KEYWORD2
 getCharge_uC	KEYWORD2
 
-
 reset	KEYWORD2
 setAccumulation	KEYWORD2
 getAccumulation	KEYWORD2
@@ -43,7 +42,6 @@ setTemperatureCompensation	KEYWORD2
 getTemperatureCompensation	KEYWORD2
 setADCRange	KEYWORD2
 getADCRange	KEYWORD2
-
 
 setMode	KEYWORD2
 getMode	KEYWORD2
@@ -56,10 +54,19 @@ getTemperatureConversionTime	KEYWORD2
 setAverage	KEYWORD2
 getAverage	KEYWORD2
 
-
 setMaxCurrentShunt	KEYWORD2
 isCalibrated	KEYWORD2
+getMaxCurrent	KEYWORD2
+getShunt	KEYWORD2
 
+setShuntTemperatureCoefficent	KEYWORD2
+getShuntTemperatureCoefficent	KEYWORD2
+
+
+
+getManufacturer	KEYWORD2
+getDieID	KEYWORD2
+getRevision	KEYWORD2
 
 
 # Constants (LITERAL1)

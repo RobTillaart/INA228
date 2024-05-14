@@ -16,13 +16,22 @@ Arduino library for the INA228 power sensor.
 
 ## Description
 
-**Experimental** library for the INA228 power sensor.
-Not all functionality is tested / investigated.
+**Experimental** 
+
+The library for the INA228 power sensor differs from the better 
+known INA226 in that it has a 20 bit ADC.
+This should result in higher precision however this is expected to only 
+be visible with stable loads and low noise. 
+Another important difference is that the INA228 works up to 85 Volts,
+which is more than twice the 36 volt of the INA226.
+
+The initial release 0.1.0 is **not** tested verified with hardware yet.
+Furthermore not all functionality is implemented, especially the diagnose
+alert, threshold and limits.
+
+Feedback as always is welcome.
 
 Read datasheet for details.
-
-This readme is preliminary (copy from INA226).
-
 
 ==> **USE WITH CARE**
 
@@ -34,8 +43,6 @@ A few important maxima, see datasheet.
 | bus voltage   |  85   | Volt   |  unclear for how long.
 | shunt voltage |  ??   | mVolt  |
 | current       |  10   | Ampere |  DC only
-
-
 
 
 #### Special characters
@@ -235,19 +242,19 @@ To elaborate
 
 #### Diagnose alert
 
-To elaborate
+TODO
 
 
-#### Limits
+#### Threshold and Limits
 
-To elaborate
+TODO
 
 
 #### Manufacturer and ID
 
-- **bool getManufacturer()** idem.
-- **uint16_t getDieID()** idem.
-- **uint16_t getRevID()** idem.
+- **bool getManufacturer()** Returns 0x5449, can be used to check right sensor.
+- **uint16_t getDieID()** Returns 0x228, can be used to check right sensor.
+- **uint16_t getRevision()** Returns revision, probably 0x01.
 
 
 ## Future
@@ -255,14 +262,16 @@ To elaborate
 
 #### Must
 
-- get hardware to test.
+- get hardware, test and verify.
 - update documentation.
 - update functionality.
-- test a lot.
-- write examples.
-- keep in sync with INA226 where possible.
+  - diagnose, thresholds limits
+
 
 #### Should
+
+- write examples.
+- keep in sync with INA226 where possible.
 
 
 #### Could
@@ -272,7 +281,8 @@ To elaborate
 
 #### Won't
 
-- cache registers for performance (first get it working).
+- cache registers for performance 
+  - first get library working / tested.
   - reset should reread all cached values...
 
 

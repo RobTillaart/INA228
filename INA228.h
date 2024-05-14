@@ -166,7 +166,6 @@ public:
   float    getMaxCurrent();
   float    getShunt();
 
-
   //
   //  SHUNT TEMPERATURE COEFFICIENT REGISTER 3
   //  read datasheet for details. use with care.
@@ -175,10 +174,16 @@ public:
   uint16_t getShuntTemperatureCoefficent();
 
 
+  //
+  //  DIAGNOSE ALERT REGISTER 11  (0x0B)
+  //  read datasheet for details. use with care.
+  //  TODO
 
 
-
-
+  //
+  //  THRESHOLD AND LIMIT REGISTERS 12-17
+  //  read datasheet for details. use with care.
+  //  TODO
 
 
 
