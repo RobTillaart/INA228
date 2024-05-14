@@ -2,7 +2,7 @@
 //    FILE: INA228.h
 //  AUTHOR: Rob Tillaart
 // VERSION: 0.1.0
-//    DATE: 2024-
+//    DATE: 2024-05-09
 // PURPOSE: Arduino library for INA228 power sensor
 //     URL: https://github.com/RobTillaart/INA228
 //
