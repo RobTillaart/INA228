@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [0.1.1] - 2024-05-15
-- make functional complete
-  - add limit functions
-  - add threshold functions
+- add limit functions
+- add threshold functions
+- add constants for DiagnoseAlert register
+  - check them in unit test
+- move register constants to .cpp
+- make readRegister() and writeRegister() private
+- update readme.md, keywords.txt
 - minor edits
 
 

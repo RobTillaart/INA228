@@ -67,9 +67,9 @@ getShuntTemperatureCoefficent	KEYWORD2
 
 
 setDiagnoseAlert	KEYWORD2
+getDiagnoseAlert	KEYWORD2
 setDiagnoseAlertBit	KEYWORD2
 clrDiagnoseAlertBit	KEYWORD2
-getDiagnoseAlert	KEYWORD2
 getDiagnoseAlertBit	KEYWORD2
 
 

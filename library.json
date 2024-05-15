@@ -1,7 +1,7 @@
 {
   "name": "INA228",
   "keywords": "power,ampere,voltage,volts,current",
-  "description": "Arduino library for INA228 current and power sensor.",
+  "description": "Arduino library for INA228 voltage, current and power sensor.",
   "authors":
   [
     {
