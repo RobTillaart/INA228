@@ -116,7 +116,7 @@ float INA228::getPower()
 float INA228::getTemperature()
 {
   uint32_t value = _readRegister(INA228_TEMPERATURE, 2);
-  return value * 7.8125e-6;
+  return value * 7.8125e-3;
 }
 
 //  PAGE 26 + 8.1.2
