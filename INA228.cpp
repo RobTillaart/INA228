@@ -95,13 +95,19 @@ float INA228::getShuntVoltage()
 float INA228::getCurrent()
 {
   uint32_t value = _readRegister(INA228_CURRENT, 3);
+  value >>= 4;  //  20 bits - 23-4
 
   //  PAGE 31 (8.1.2)
   float shunt_cal = 13107.2e6 * _current_LSB * _shunt;
   //  depends on ADCRANGE in INA228_CONFIG register.
   uint16_t config = _readRegister(INA228_CONFIG, 2);
   if (config & 0x0008) shunt_cal *= 4;
-  return value * shunt_cal;
+  //return value * shunt_cal;
+
+  // After programming the SHUNT_CAL register with the calculated value, 
+  // the measured current in Amperes can be read from the CURRENT register.
+  // Current [A] = CURRENT_LSB x CURRENT
+  return _current_LSB * value;
 }
 
 //  PAGE 26 + 8.1.2
@@ -297,10 +303,17 @@ uint8_t INA228::getAverage()
 int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
 {
   if (maxCurrent > 10) return -1;
-  if (shunt < 0.005) return -2;
+  if (shunt < 0.0002) return -2;
   _maxCurrent = maxCurrent;
   _shunt = shunt;
   _current_LSB = _maxCurrent * 1.9073486328125e-6;  //  pow(2, -19);
+
+  // PAGE 31 (8.1.2) - TBD
+  // For the INA228 device to report current values in Ampere units, 
+  // a constant conversion value must be written in the SHUNT_CAL register 
+  // that is dependent on the maximum measured current and the shunt 
+  // resistance used in the application.
+  // SHUNT_CAL = 13107.2 x 10^6 x SHUNT x CURRENT_LSB x SCALE
   return 0;
 }
 
