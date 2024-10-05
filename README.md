@@ -43,6 +43,8 @@ The library is **not** tested and verified with hardware yet.
 
 Feedback as always is welcome.
 
+### Details
+
 The INA228 is a voltage, current and power measurement device.
 A few important data, see datasheet.
 
@@ -57,15 +59,15 @@ A few important data, see datasheet.
 Read the datasheet for the details, Section 7, Page 12++.
 
 
-#### Special characters
+### Special characters
 
 - Ω == Ohm = ALT-234 (Windows)
 - µ == micro = ALT-0181 (Windows)
 - ° == degree = ALT-0176 (Windows)
-- ± == plus minus = ALT-177 (Windows)
+- ± == plus minus = ALT-0177 (Windows)
 
 
-#### Related
+### Related
 
 - https://www.ti.com/product/INA228#tech-docs
 - https://www.ti.com/product/INA228#params
@@ -78,7 +80,7 @@ Read the datasheet for the details, Section 7, Page 12++.
 
 ## I2C
 
-#### Address
+### Address
 
 The sensor can have 16 different I2C addresses,
 which depends on how the A0 and A1 address lines
@@ -86,27 +88,19 @@ are connected to the SCL, SDA, GND and VCC pins.
 
 See table - from datasheet table 7-2, page 19.
 
-|  A1   |  A0   |  Addr  |  HEX   |
-|:-----:|:-----:|:------:|:------:|
-|  GND  |  GND  |   64   |  0x40  |
-|  GND  |  VS   |   65   |  0x41  |
-|  GND  |  SDA  |   66   |  0x42  |
-|  GND  |  SCL  |   67   |  0x43  |
-|  VS   |  GND  |   68   |  0x44  |
-|  VS   |  VS   |   69   |  0x45  |
-|  VS   |  SDA  |   70   |  0x46  |
-|  VS   |  SCL  |   71   |  0x47  |
-|  SDA  |  GND  |   72   |  0x48  |
-|  SDA  |  VS   |   73   |  0x49  |
-|  SDA  |  SDA  |   74   |  0x4A  |
-|  SDA  |  SCL  |   75   |  0x4B  |
-|  SCL  |  GND  |   76   |  0x4C  |
-|  SCL  |  VS   |   77   |  0x4D  |
-|  SCL  |  SDA  |   78   |  0x4E  |
-|  SCL  |  SCL  |   79   |  0x4F  |
+|  A1   |  A0   |  Addr  |  HEX   ||  A1   |  A0   |  Addr  |  HEX   |
+|:-----:|:-----:|:------:|:------:||:-----:|:-----:|:------:|:------:|
+|  GND  |  GND  |   64   |  0x40  ||  SDA  |  GND  |   72   |  0x48  |
+|  GND  |  VS   |   65   |  0x41  ||  SDA  |  VS   |   73   |  0x49  |
+|  GND  |  SDA  |   66   |  0x42  ||  SDA  |  SDA  |   74   |  0x4A  |
+|  GND  |  SCL  |   67   |  0x43  ||  SDA  |  SCL  |   75   |  0x4B  |
+|  VS   |  GND  |   68   |  0x44  ||  SCL  |  GND  |   76   |  0x4C  |
+|  VS   |  VS   |   69   |  0x45  ||  SCL  |  VS   |   77   |  0x4D  |
+|  VS   |  SDA  |   70   |  0x46  ||  SCL  |  SDA  |   78   |  0x4E  |
+|  VS   |  SCL  |   71   |  0x47  ||  SCL  |  SCL  |   79   |  0x4F  |
 
 
-#### Performance
+### Performance
 
 To be elaborated,
 
@@ -118,7 +112,7 @@ To be elaborated,
 ```
 
 
-#### Constructor
+### Constructor
 
 - **INA228(const uint8_t address, TwoWire \*wire = Wire)** Constructor to set
 the address and optional Wire interface.
@@ -129,7 +123,7 @@ Note: one needs to set **Wire.begin()** before calling **begin()**.
 - **uint8_t getAddress()** returns the address set in the constructor.
 
 
-#### Core Functions
+### Core Functions
 
 Note the power and the current are not meaningful without calibrating the sensor.
 Also the value is not meaningful if there is no shunt connected.
@@ -166,7 +160,7 @@ Helper functions for the micro scale.
 - **float getCharge_uC()** idem, microCoulomb.
 
 
-#### Configuration
+### Configuration
 
 Read datasheet for details, section 7.6.1.1, page 22
 
@@ -180,7 +174,7 @@ Read datasheet for details, section 7.6.1.1, page 22
 - **void setADCRange(bool flag)** flag = false => 164 mV, true => 41 mV
 - **bool getADCRange()** return set value.
 
-#### Configuration ADC
+### Configuration ADC
 
 Read datasheet for details, section 7.6.1.2, page 22++
 
@@ -188,7 +182,7 @@ Read datasheet for details, section 7.6.1.2, page 22++
 - **uint8_t getMode()** return set value.
 
 |  MODE                           |  value  |  notes  |
-|:-------------------------------:|:-------:|:--------|
+|:--------------------------------|:-------:|:--------|
 | INA228_MODE_SHUTDOWN            |   0x00  |
 | INA228_MODE_TRIG_BUS            |   0x01  |
 | INA228_MODE_TRIG_SHUNT          |   0x02  |
@@ -214,7 +208,7 @@ Read datasheet for details, section 7.6.1.2, page 22++
 - **uint8_t getTemperatureConversionTime()** return set value.
 
 |  TIMING             |  value  |  notes  |
-|:-------------------:|:-------:|:--------|
+|:--------------------|:-------:|:--------|
 | INA228_50_us        |    0    |
 | INA228_84_us        |    1    |
 | INA228_150_us       |    2    |
@@ -229,7 +223,7 @@ Read datasheet for details, section 7.6.1.2, page 22++
 - **uint8_t getAverage()** return set value.
 
 |  AVERAGE            |  value  |  notes  |
-|:-------------------:|:-------:|:--------|
+|:--------------------|:-------:|:--------|
 | INA228_1_SAMPLE     |    0    |
 | INA228_4_SAMPLES    |    1    |
 | INA228_16_SAMPLES   |    2    |
@@ -240,7 +234,7 @@ Read datasheet for details, section 7.6.1.2, page 22++
 | INA228_1024_SAMPLES |    7    |
 
 
-#### Shunt Calibration
+### Shunt Calibration
 
 To elaborate, read datasheet for details.
 
@@ -250,7 +244,7 @@ To elaborate, read datasheet for details.
 - **float getShunt()** return set value.
 
 
-#### Shunt temperature coefficient
+### Shunt temperature coefficient
 
 Read datasheet for details, page 16.
 
@@ -269,7 +263,7 @@ Default 0 for easy reset.
 - **uint16_t getShuntTemperatureCoefficent()** return set value.
 
 
-#### Diagnose alert
+### Diagnose alert
 
 Read datasheet for details, section 7.6.1.12, page 26++.
 
@@ -283,25 +277,36 @@ INA228.h has an enum for the bit fields.
 - **uint16_t getDiagnoseAlertBit(uint8_t bit)** return individual bit.
 
 
-#### Threshold and Limits
+### Threshold and Limits
 
 Read datasheet for details, section 7.3.7, page 16++
+
+#### Shunt
 
 - **void setShuntOvervoltageTH(uint16_t threshold)**
 - **uint16_t getShuntOvervoltageTH()**
 - **void setShuntUndervoltageTH(uint16_t threshold)**
 - **uint16_t getShuntUndervoltageTH()**
+
+#### Bus
+
 - **void setBusOvervoltageTH(uint16_t threshold)**
 - **uint16_t getBusOvervoltageTH()**
 - **void setBusUndervoltageTH(uint16_t threshold)**
 - **uint16_t getBusUndervoltageTH()**
+
+#### Temperature
+
 - **void setTemperatureOverLimitTH(uint16_t threshold)**
 - **uint16_t getTemperatureOverLimitTH()**
+
+#### Power
+
 - **void setPowerOverLimitTH(uint16_t threshold)**
 - **uint16_t getPowerOverLimitTH()**
 
 
-#### Manufacturer and ID
+### Manufacturer and ID
 
 - **bool getManufacturer()** Returns 0x5449, can be used to check right sensor.
 - **uint16_t getDieID()** Returns 0x228, can be used to check right sensor.

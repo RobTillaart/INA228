@@ -1,10 +1,11 @@
 #pragma once
 //    FILE: INA228.h
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.1
+// VERSION: 0.1.2
 //    DATE: 2024-05-09
 // PURPOSE: Arduino library for INA228 voltage, current and power sensor.
 //     URL: https://github.com/RobTillaart/INA228
+//
 //
 //  Read the datasheet for the details
 
@@ -13,7 +14,7 @@
 #include "Wire.h"
 
 
-#define INA228_LIB_VERSION          "0.1.1"
+#define INA228_LIB_VERSION          "0.1.2"
 
 
 //  for setMode() and getMode()
