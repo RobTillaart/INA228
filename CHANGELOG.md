@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.1.2] - 2024-09-29
 - merge fix for temperature - kudos to xkachya!
+- add INA228_CFG_REGISTER defines (register 0).
+- add INA228_ADC_REGISTER defines (register 1).
+- fix ADC functions.
 - update readme.md
 
 ## [0.1.1] - 2024-05-15
