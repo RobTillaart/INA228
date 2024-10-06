@@ -338,7 +338,7 @@ uint8_t INA228::getAverage()
 int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
 {
   if (maxCurrent > 10) return -1;  //  TODO error code
-  if (shunt < 0.005) return -2;    //  TODO error code
+  if (shunt < 0.0001) return -2;   //  TODO error code
   _maxCurrent = maxCurrent;
   _shunt = shunt;
   _current_LSB = _maxCurrent * 1.9073486328125e-6;  //  pow(2, -19);
@@ -454,38 +454,38 @@ uint16_t INA228::getShuntUndervoltageTH()
 void INA228::setBusOvervoltageTH(uint16_t threshold)
 {
   if (threshold > 0x7FFF) return;
-  float LSB = 3.125e-3;
+  //float LSB = 3.125e-3;
   _writeRegister(INA228_BOVL, threshold);
 }
 
 uint16_t INA228::getBusOvervoltageTH()
 {
-  float LSB = 3.125e-3;
+  //float LSB = 3.125e-3;
   return _readRegister(INA228_BOVL, 2);
 }
 
 void INA228::setBusUndervoltageTH(uint16_t threshold)
 {
   if (threshold > 0x7FFF) return;
-  float LSB = 3.125e-3;
+  //float LSB = 3.125e-3;
   _writeRegister(INA228_BUVL, threshold);
 }
 
 uint16_t INA228::getBusUndervoltageTH()
 {
-  float LSB = 3.125e-3;
+  //float LSB = 3.125e-3;
   return _readRegister(INA228_BUVL, 2);
 }
 
 void INA228::setTemperatureOverLimitTH(uint16_t threshold)
 {
-  float LSB = 7.8125e-3;  //  milliCelsius
+  //float LSB = 7.8125e-3;  //  milliCelsius
   _writeRegister(INA228_TEMP_LIMIT, threshold);
 }
 
 uint16_t INA228::getTemperatureOverLimitTH()
 {
-  float LSB = 7.8125e-3;  //  milliCelsius
+  //float LSB = 7.8125e-3;  //  milliCelsius
   return _readRegister(INA228_TEMP_LIMIT, 2);
 }
 

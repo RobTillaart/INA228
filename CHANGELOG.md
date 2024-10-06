@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - optimize **xxxDiagnoseAlertBit()** functions
 - rename **clearDiagnoseAlertBit()**
 - fix **getDieID()**
+- add **INA228_performance.ino**
 - update readme.md
 
 ## [0.1.1] - 2024-05-15

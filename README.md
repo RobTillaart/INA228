@@ -250,10 +250,11 @@ Read datasheet for details, section 7.6.1.2, page 22++
 
 To elaborate, read datasheet for details.
 
-- **int setMaxCurrentShunt(float maxCurrent, float shunt)**
+- **int setMaxCurrentShunt(float maxCurrent, float shunt)** 
+maxCurrent = 0..10A, shunt = 0.0001 .. ?? 
   - returns 0 if OK.
   - returns -1 if maxCurrent > 10 Ampere
-  - returns -2 if shunt < 0.0002 Ohm.
+  - returns -2 if shunt < 0.0001 Ohm.
 - **bool isCalibrated()** is valid calibration value.
 - **float getMaxCurrent()** return set value.
 - **float getShunt()** return set value.
