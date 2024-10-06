@@ -32,6 +32,7 @@ void setup()
     while(1);
   }
 
+  //  TODO different I2C speeds: 100..800 kHz.
   test_core();
   test_config();
   test_adc_config();

@@ -258,6 +258,7 @@ maxCurrent = 0..10A, shunt = 0.0001 .. ??
 - **bool isCalibrated()** is valid calibration value.
 - **float getMaxCurrent()** return set value.
 - **float getShunt()** return set value.
+- **float getCurrentLSB()** return currenLSB.
 
 
 ### Shunt temperature coefficient

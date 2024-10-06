@@ -161,10 +161,12 @@ public:
   //  SHUNT CALIBRATION REGISTER 2
   //  read datasheet for details. use with care.
   //  maxCurrent <= 10, shunt > 0.005.
+  //  returns _current_LSB;
   int      setMaxCurrentShunt(float maxCurrent, float shunt);
   bool     isCalibrated()    { return _current_LSB != 0.0; };
   float    getMaxCurrent();
   float    getShunt();
+  float    getCurrentLSB();
 
   //
   //  SHUNT TEMPERATURE COEFFICIENT REGISTER 3

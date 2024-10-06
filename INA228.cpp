@@ -122,17 +122,6 @@ float INA228::getShuntVoltage()
 //  PAGE 25 + 8.1.2
 float INA228::getCurrent()
 {
-  //  PAGE 31 (8.1.2)
-  float shunt_cal = 13107.2e6 * _current_LSB * _shunt;
-  //  depends on ADCRANGE in INA228_CONFIG register.
-  if (getADCRange() == 1) 
-  {
-    shunt_cal *= 4;
-  }
-  //  shunt_cal must be written to REGISTER.
-  //  work in progress PR #7
-  _writeRegister(INA228_SHUNT_CAL, shunt_cal);
-
   //  remove reserved bits.
   uint32_t value = _readRegister(INA228_CURRENT, 3) >> 4;
   return value * _current_LSB;
@@ -342,6 +331,18 @@ int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
   _maxCurrent = maxCurrent;
   _shunt = shunt;
   _current_LSB = _maxCurrent * 1.9073486328125e-6;  //  pow(2, -19);
+
+  //  PAGE 31 (8.1.2)
+  float shunt_cal = 13107.2e6 * _current_LSB * _shunt;
+  //  depends on ADCRANGE in INA228_CONFIG register.
+  if (getADCRange() == 1) 
+  {
+    shunt_cal *= 4;
+  }
+  //  shunt_cal must be written to REGISTER.
+  //  work in progress PR #7
+  _writeRegister(INA228_SHUNT_CAL, shunt_cal);
+
   return 0;
 }
 
@@ -355,6 +356,10 @@ float INA228::getShunt()
   return _shunt;
 }
 
+float INA228::getCurrentLSB()
+{
+  return _current_LSB;
+}
 
 ////////////////////////////////////////////////////////
 //
@@ -425,7 +430,7 @@ uint16_t INA228::getDiagnoseAlertBit(uint8_t bit)
 //
 //  THRESHOLD AND LIMIT REGISTERS 12-17
 //
-//  TODO 
+//  TODO - API ?
 
 void INA228::setShuntOvervoltageTH(uint16_t threshold)
 {
