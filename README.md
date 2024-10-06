@@ -325,12 +325,12 @@ Read datasheet for details, section 7.3.7, page 16++
 #### Should
 
 - update documentation.
-- write examples, (please share yours).
+- add error handling.
 - keep in sync with INA226 where possible.
-
 
 #### Could
 
+- write examples, (please share yours).
 - improve unit tests
 - clean up magic numbers in the code
 

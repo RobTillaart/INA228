@@ -93,59 +93,83 @@ uint8_t INA228::getAddress()
 float INA228::getBusVoltage()
 {
   uint32_t value = _readRegister(INA228_BUS_VOLTAGE, 3);
+  //  remove reserved bits.
   value >>= 4;
-  return value * 195.3125e-6;
+  float LSB = 195.3125e-6;  //  195.3125 uV
+  return value * LSB;
 }
 
 //  PAGE 25
-float INA228::getShuntVoltage()
+float INA228::getShuntVoltage() 
 {
-  uint32_t value = _readRegister(INA228_SHUNT_VOLTAGE, 3);
-  value >>= 4;
-  //  depends on ADCRANGE in INA228_CONFIG register.
-  uint16_t config = _readRegister(INA228_CONFIG, 2);
-  if (config & 0x0008) return value * 78.125e-9;
-  return value * 312.5e-9;
+  //  LSB depends on ADCRANGE in INA228_CONFIG register.
+  float LSB = 312.5e-9;  //  312.5 nV
+  if (getADCRange() == 1) 
+  {
+    LSB = 78.125e-9;     //  78.125 nV
+  }
+
+  //  remove reserved bits.
+  int32_t value = _readRegister(INA228_SHUNT_VOLTAGE, 3) >> 4;
+  //  handle negative values
+  if (value & 0x00800000) 
+  {
+    value |= 0xFF000000;
+  }
+  return value * LSB;
 }
 
 //  PAGE 25 + 8.1.2
 float INA228::getCurrent()
 {
-  uint32_t value = _readRegister(INA228_CURRENT, 3);
+  //  remove reserved bits.
+  uint32_t value = _readRegister(INA228_CURRENT, 3) >> 4;
 
   //  PAGE 31 (8.1.2)
   float shunt_cal = 13107.2e6 * _current_LSB * _shunt;
   //  depends on ADCRANGE in INA228_CONFIG register.
-  uint16_t config = _readRegister(INA228_CONFIG, 2);
-  if (config & 0x0008) shunt_cal *= 4;
+  if (getADCRange() == 1) 
+  {
+    shunt_cal *= 4;
+  }
+  //  shunt_cal must be written to REGISTER.
+  //  work in progress PR #7
+
   return value * shunt_cal;
 }
 
 //  PAGE 26 + 8.1.2
 float INA228::getPower()
 {
-  uint32_t value = _readRegister(INA228_POWER, 3);
+  uint32_t value = _readRegister(INA228_POWER, 3) ;
   //  PAGE 31 (8.1.2)
   return value * 3.2 * _current_LSB;
 }
 
-//  PAGE25
+//  PAGE 25
 float INA228::getTemperature()
 {
   uint32_t value = _readRegister(INA228_TEMPERATURE, 2);
-  return value * 7.8125e-3;
+  float LSB = 7.8125e-3;  //   milli degree Celsius
+  return value * LSB;
 }
 
 //  PAGE 26 + 8.1.2
 float INA228::getEnergy()
 {
+  //  read 40 bit unsigned as a float to prevent 64 bit ints
+  //  40 bit ==> O(10^12)
   float value = _readRegisterF(INA228_ENERGY, 5);
   //  PAGE 31 (8.1.2)
-  return value * 16 * 3.2 * _current_LSB;
+  return value * (16 * 3.2) * _current_LSB;
 }
 
+
+//  PAGE 26 + 8.1.2
 float INA228::getCharge()
 {
+  //  read 40 bit unsigned as a float to prevent 64 bit ints
+  //  40 bit ==> O(10^12)
   float value = _readRegisterF(INA228_CHARGE, 5);
   //  PAGE 32 (8.1.2)
   return value * _current_LSB;
