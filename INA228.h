@@ -210,7 +210,8 @@ public:
   //
   //  MANUFACTURER and ID REGISTER 3E and 3F
   //
-  bool     getManufacturer();  //  typical 0x5449
+  //                               typical value
+  bool     getManufacturer();  //  0x5449
   uint16_t getDieID();         //  0x0228
   uint16_t getRevision();      //  0x0001
 

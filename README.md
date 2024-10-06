@@ -336,7 +336,8 @@ Read datasheet for details, section 7.3.7, page 16++
 
 - get hardware.
 - test and verify.
-
+- DiagnoseAlertBit functions
+  - redo API (0.2.0)
 
 #### Should
 
