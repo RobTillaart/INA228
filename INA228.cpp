@@ -81,15 +81,30 @@ float INA228::getBusVoltage()
 }
 
 //  PAGE 25
-float INA228::getShuntVoltage()
-{
-  uint32_t value = _readRegister(INA228_SHUNT_VOLTAGE, 3);
-  value >>= 4;
-  //  depends on ADCRANGE in INA228_CONFIG register.
+//Original function commented out
+//float INA228::getShuntVoltage()
+//{
+//  uint32_t value = _readRegister(INA228_SHUNT_VOLTAGE, 3);
+//  value >>= 4;
+//  //  depends on ADCRANGE in INA228_CONFIG register.
+//  uint16_t config = _readRegister(INA228_CONFIG, 2);
+//  if (config & 0x0008) return value * 78.125e-9;
+//  return value * 312.5e-9;
+//}
+
+//Proposed new function which allows the reading of both positive and negative currents
+float INA228::getShuntVoltage() {
   uint16_t config = _readRegister(INA228_CONFIG, 2);
-  if (config & 0x0008) return value * 78.125e-9;
-  return value * 312.5e-9;
+  float scale = 312.5;
+  if (config & 0x0008) {
+    scale = 78.125;
+  }
+  int32_t value = _readRegister(INA228_SHUNT_VOLTAGE, 3);
+  if (value & 0x800000)
+    value |= 0xFF000000;   
+  return (float)value / 16.0 * scale / 1000000.0 / 1000;
 }
+
 
 //  PAGE 25 + 8.1.2
 float INA228::getCurrent()
