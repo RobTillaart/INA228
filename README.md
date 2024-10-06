@@ -132,14 +132,9 @@ Also the value is not meaningful if there is no shunt connected.
 - **float getBusVoltage()** idem. in volts. Max 36 Volt.
 - **float getCurrent()** is the current through the shunt in Ampere.
 - **float getPower()** is the current x BusVoltage in Watt.
-- **float getEnergy()** return Joule (elaborate).
-- **float getCharge()** return Coulomb (elaborate).
 
-The **getEnergy()** and **getCharge()** only have meaning in continuous
-mode. See page 13++.
-
-The library has helper functions to convert above output to a more
-appropriate scale of units.
+The library has helper/scaling functions to convert above output values to a 
+more appropriate scale of units. (to be verified if meaningful)
 
 Helper functions for the milli scale.
 
@@ -147,8 +142,6 @@ Helper functions for the milli scale.
 - **float getShuntVoltage_mV()** idem, in milliVolts.
 - **float getCurrent_mA()** idem, in milliAmpere.
 - **float getPower_mW()** idem, in milliWatt.
-- **float getEnergy_mJ()** idem, milliJoule.
-- **float getCharge_mC()** idem, milliCoulomb.
 
 Helper functions for the micro scale.
 
@@ -156,6 +149,25 @@ Helper functions for the micro scale.
 - **float getShuntVoltage_uV()** idem, in microVolts.
 - **float getCurrent_uA()** idem, in microAmpere.
 - **float getPower_uW()** idem, in microWatt.
+
+
+### Cumulative functions
+
+See page 13++, page 32, 8.1.2
+
+- **float getEnergy()** return Joule (elaborate).
+- **float getCharge()** return Coulomb (elaborate).
+
+The **getEnergy()** and **getCharge()** only have meaning in continuous mode.
+These are accumulation registers and can be reset to zero by **setAccumulation(1)**.
+
+Helper functions for the milli scale.
+
+- **float getEnergy_mJ()** idem, milliJoule.
+- **float getCharge_mC()** idem, milliCoulomb.
+
+Helper functions for the micro scale.
+
 - **float getEnergy_uJ()** idem, microJoule.
 - **float getCharge_uC()** idem, microCoulomb.
 
@@ -239,6 +251,9 @@ Read datasheet for details, section 7.6.1.2, page 22++
 To elaborate, read datasheet for details.
 
 - **int setMaxCurrentShunt(float maxCurrent, float shunt)**
+  - returns 0 if OK.
+  - returns -1 if maxCurrent > 10 Ampere
+  - returns -2 if shunt < 0.0002 Ohm.
 - **bool isCalibrated()** is valid calibration value.
 - **float getMaxCurrent()** return set value.
 - **float getShunt()** return set value.

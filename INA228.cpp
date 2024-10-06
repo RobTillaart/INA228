@@ -39,7 +39,7 @@
 #define INA228_CFG_CONVDLY          0x3FC0
 #define INA228_CFG_TEMPCOMP         0x0020
 #define INA228_CFG_ADCRANGE         0x0010
-#define INA228_CFG_RESERVED         0x0004
+#define INA228_CFG_RESERVED         0x000F
 
 
 //  ADC MASKS (register 1)
@@ -122,9 +122,6 @@ float INA228::getShuntVoltage()
 //  PAGE 25 + 8.1.2
 float INA228::getCurrent()
 {
-  //  remove reserved bits.
-  uint32_t value = _readRegister(INA228_CURRENT, 3) >> 4;
-
   //  PAGE 31 (8.1.2)
   float shunt_cal = 13107.2e6 * _current_LSB * _shunt;
   //  depends on ADCRANGE in INA228_CONFIG register.
@@ -134,7 +131,10 @@ float INA228::getCurrent()
   }
   //  shunt_cal must be written to REGISTER.
   //  work in progress PR #7
+  _writeRegister(INA228_SHUNT_CAL, shunt_cal);
 
+  //  remove reserved bits.
+  uint32_t value = _readRegister(INA228_CURRENT, 3) >> 4;
   return value * shunt_cal;
 }
 
@@ -337,8 +337,8 @@ uint8_t INA228::getAverage()
 //
 int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
 {
-  if (maxCurrent > 10) return -1;
-  if (shunt < 0.005) return -2;
+  if (maxCurrent > 10) return -1;  //  TODO error code
+  if (shunt < 0.005) return -2;    //  TODO error code
   _maxCurrent = maxCurrent;
   _shunt = shunt;
   _current_LSB = _maxCurrent * 1.9073486328125e-6;  //  pow(2, -19);
