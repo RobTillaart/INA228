@@ -135,7 +135,7 @@ float INA228::getCurrent()
 
   //  remove reserved bits.
   uint32_t value = _readRegister(INA228_CURRENT, 3) >> 4;
-  return value * shunt_cal;
+  return value * _current_LSB;
 }
 
 //  PAGE 26 + 8.1.2
