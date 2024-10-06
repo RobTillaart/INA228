@@ -393,15 +393,25 @@ uint16_t INA228::getDiagnoseAlert()
 void INA228::setDiagnoseAlertBit(uint8_t bit)
 {
   uint16_t value = _readRegister(INA228_DIAG_ALERT, 2);
-  value |= (1 << bit);
-  _writeRegister(INA228_DIAG_ALERT, value);
+  uint16_t mask = (1 << bit);
+  //  only write new value if needed.
+  if ((value & mask) == 0)
+  {
+    value |= mask;
+    _writeRegister(INA228_DIAG_ALERT, value);
+  }
 }
 
-void INA228::clrDiagnoseAlertBit(uint8_t bit)
+void INA228::clearDiagnoseAlertBit(uint8_t bit)
 {
   uint16_t value = _readRegister(INA228_DIAG_ALERT, 2);
-  value &= ~(1 << bit);
-  _writeRegister(INA228_DIAG_ALERT, value);
+  uint16_t mask = (1 << bit);
+  //  only write new value if needed.
+  if ((value & mask ) != 0)
+  {
+    value &= ~mask;
+    _writeRegister(INA228_DIAG_ALERT, value);
+  }
 }
 
 uint16_t INA228::getDiagnoseAlertBit(uint8_t bit)
@@ -415,66 +425,81 @@ uint16_t INA228::getDiagnoseAlertBit(uint8_t bit)
 //
 //  THRESHOLD AND LIMIT REGISTERS 12-17
 //
+//  TODO 
 
 void INA228::setShuntOvervoltageTH(uint16_t threshold)
 {
+  //  TODO ADCRANGE DEPENDENT
   _writeRegister(INA228_SOVL, threshold);
 }
 
 uint16_t INA228::getShuntOvervoltageTH()
 {
+  //  TODO ADCRANGE DEPENDENT
   return _readRegister(INA228_SOVL, 2);
 }
 
 void INA228::setShuntUndervoltageTH(uint16_t threshold)
 {
+  //  TODO ADCRANGE DEPENDENT
   _writeRegister(INA228_SUVL, threshold);
 }
 
 uint16_t INA228::getShuntUndervoltageTH()
 {
+  //  TODO ADCRANGE DEPENDENT
   return _readRegister(INA228_SUVL, 2);
 }
 
 void INA228::setBusOvervoltageTH(uint16_t threshold)
 {
   if (threshold > 0x7FFF) return;
+  float LSB = 3.125e-3;
   _writeRegister(INA228_BOVL, threshold);
 }
 
 uint16_t INA228::getBusOvervoltageTH()
 {
+  float LSB = 3.125e-3;
   return _readRegister(INA228_BOVL, 2);
 }
 
 void INA228::setBusUndervoltageTH(uint16_t threshold)
 {
   if (threshold > 0x7FFF) return;
+  float LSB = 3.125e-3;
   _writeRegister(INA228_BUVL, threshold);
 }
 
 uint16_t INA228::getBusUndervoltageTH()
 {
+  float LSB = 3.125e-3;
   return _readRegister(INA228_BUVL, 2);
 }
 
 void INA228::setTemperatureOverLimitTH(uint16_t threshold)
 {
+  float LSB = 7.8125e-3;  //  milliCelsius
   _writeRegister(INA228_TEMP_LIMIT, threshold);
 }
 
 uint16_t INA228::getTemperatureOverLimitTH()
 {
+  float LSB = 7.8125e-3;  //  milliCelsius
   return _readRegister(INA228_TEMP_LIMIT, 2);
 }
 
 void INA228::setPowerOverLimitTH(uint16_t threshold)
 {
+  //  P29
+  //  Conversion factor: 256 × Power LSB.
   _writeRegister(INA228_POWER_LIMIT, threshold);
 }
 
 uint16_t INA228::getPowerOverLimitTH()
 {
+  //  P29
+  //  Conversion factor: 256 × Power LSB.
   return _readRegister(INA228_POWER_LIMIT, 2);
 }
 
@@ -492,13 +517,13 @@ bool INA228::getManufacturer()
 uint16_t INA228::getDieID()
 {
   uint16_t value = _readRegister(INA228_DEVICE_ID, 2);
-  return (value >> 4) & 0xFFF0;
+  return (value >> 4) & 0x0FFF;
 }
 
 uint16_t INA228::getRevision()
 {
   uint16_t value = _readRegister(INA228_DEVICE_ID, 2);
-  return value & 0x0F;
+  return value & 0x000F;
 }
 
 

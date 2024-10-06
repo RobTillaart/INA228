@@ -66,6 +66,7 @@ enum ina228_timing_enum {
 
 
 //  for diagnose/alert() bit fields.
+//  TODO bit masks?
 enum ina228_diag_enum {
   INA228_DIAG_MEMORY_STATUS      = 0,
   INA228_DIAG_CONVERT_COMPLETE   = 1,
@@ -180,14 +181,17 @@ public:
   void     setDiagnoseAlert(uint16_t flags);
   uint16_t getDiagnoseAlert();
   //  INA228.h has an enum for the bit fields.
+  //  See ina228_diag_enum above
   void     setDiagnoseAlertBit(uint8_t bit);
-  void     clrDiagnoseAlertBit(uint8_t bit);
+  void     clearDiagnoseAlertBit(uint8_t bit);
   uint16_t getDiagnoseAlertBit(uint8_t bit);
 
 
   //
   //  THRESHOLD AND LIMIT REGISTERS 12-17
   //  read datasheet for details, section 7.3.7, page 16++
+  //
+  //  TODO - design and implement better API?
   //
   void     setShuntOvervoltageTH(uint16_t threshold);
   uint16_t getShuntOvervoltageTH();
@@ -204,11 +208,11 @@ public:
 
 
   //
-  //  MANUFACTURER and ID REGISTER 3E/3F
+  //  MANUFACTURER and ID REGISTER 3E and 3F
   //
-  bool     getManufacturer();
-  uint16_t getDieID();
-  uint16_t getRevision();
+  bool     getManufacturer();  //  typical 0x5449
+  uint16_t getDieID();         //  0x0228
+  uint16_t getRevision();      //  0x0001
 
 
 private:

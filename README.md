@@ -181,7 +181,7 @@ Read datasheet for details, section 7.6.1.1, page 22
 - **bool getAccumulation()** return set value.
 - **void setConversionDelay(uint8_t steps)**  Conversion delay in 0..255 steps of 2 ms
 - **uint8_t getConversionDelay()** return set value.
-- **void setTemperatureCompensation(bool on)**
+- **void setTemperatureCompensation(bool on)** see Shunt temperature coefficient below.
 - **bool getTemperatureCompensation()** return set value.
 - **void setADCRange(bool flag)** flag = false => 164 mV, true => 41 mV
 - **bool getADCRange()** return set value.
@@ -275,7 +275,8 @@ Radjusted = Rnominal + (Rnominal x (temperature - 25) x PPM) * 10e-6;
 
 - **bool setShuntTemperatureCoefficent(uint16_t ppm = 0)** ppm = 0..16383 ppm/°C.
 Default 0 for easy reset.
-- **uint16_t getShuntTemperatureCoefficent()** return set value.
+Returns false if ppm is out of range.
+- **uint16_t getShuntTemperatureCoefficent()** returns the set value (default 0).
 
 
 ### Diagnose alert
@@ -288,7 +289,7 @@ Read datasheet for details, section 7.6.1.12, page 26++.
 INA228.h has an enum for the bit fields.
 
 - **void setDiagnoseAlertBit(uint8_t bit)** set individual bit.
-- **void clrDiagnoseAlertBit(uint8_t bit)** clear individual bit.
+- **void clearDiagnoseAlertBit(uint8_t bit)** clear individual bit.
 - **uint16_t getDiagnoseAlertBit(uint8_t bit)** return individual bit.
 
 
@@ -340,6 +341,7 @@ Read datasheet for details, section 7.3.7, page 16++
 #### Should
 
 - update documentation.
+- TODO's in code and docs.
 - add error handling.
 - keep in sync with INA226 where possible.
 

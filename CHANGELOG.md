@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - add INA228_CFG_REGISTER defines (register 0).
 - add INA228_ADC_REGISTER defines (register 1).
 - fix ADC functions.
+- optimize **xxxDiagnoseAlertBit()** functions
+- rename **clearDiagnoseAlertBit()**
+- fix **getDieID()**
 - update readme.md
 
 ## [0.1.1] - 2024-05-15
