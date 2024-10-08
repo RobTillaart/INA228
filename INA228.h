@@ -105,24 +105,25 @@ public:
   float    getCurrent();          //  Ampere
   float    getPower();            //  Watt
   float    getTemperature();      //  Celsius
-  float    getEnergy();           //  Joule
-  float    getCharge();           //  Coulombs
+  //  the next two functions are returning double as they have higher accuracy.
+  double   getEnergy();           //  Joule
+  double   getCharge();           //  Coulombs
 
   //  Scale helpers milli range
   float    getBusVoltage_mV()   { return getBusVoltage()   * 1e3; };
   float    getShuntVoltage_mV() { return getShuntVoltage() * 1e3; };
   float    getCurrent_mA()      { return getCurrent()      * 1e3; };
   float    getPower_mW()        { return getPower()        * 1e3; };
-  float    getEnergy_mJ()       { return getEnergy()       * 1e3; };
-  float    getCharge_mC()       { return getCharge()       * 1e3; };
+  double   getEnergy_mJ()       { return getEnergy()       * 1e3; };
+  double   getCharge_mC()       { return getCharge()       * 1e3; };
 
   //  Scale helpers micro range
   float    getBusVoltage_uV()   { return getBusVoltage()   * 1e6; };
   float    getShuntVoltage_uV() { return getShuntVoltage() * 1e6; };
   float    getCurrent_uA()      { return getCurrent()      * 1e6; };
   float    getPower_uW()        { return getPower()        * 1e6; };
-  float    getEnergy_uJ()       { return getEnergy()       * 1e6; };
-  float    getCharge_uC()       { return getCharge()       * 1e6; };
+  double   getEnergy_uJ()       { return getEnergy()       * 1e6; };
+  double   getCharge_uC()       { return getCharge()       * 1e6; };
 
   //
   //  CONFIG REGISTER 0
@@ -219,8 +220,10 @@ public:
 
 
 private:
-  uint32_t _readRegister(uint8_t reg, uint8_t bytes);  //  max 4.
-  float    _readRegisterF(uint8_t reg, uint8_t bytes);
+  //  max 4 bytes
+  uint32_t _readRegister(uint8_t reg, uint8_t bytes);
+  //  5 bytes or more
+  double   _readRegisterF(uint8_t reg, uint8_t bytes);
   uint16_t _writeRegister(uint8_t reg, uint16_t value);
 
   float    _current_LSB;

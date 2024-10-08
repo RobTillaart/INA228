@@ -100,11 +100,11 @@ float INA228::getBusVoltage()
 }
 
 //  PAGE 25
-float INA228::getShuntVoltage() 
+float INA228::getShuntVoltage()
 {
   //  LSB depends on ADCRANGE in INA228_CONFIG register.
   float LSB = 312.5e-9;  //  312.5 nV
-  if (getADCRange() == 1) 
+  if (getADCRange() == 1)
   {
     LSB = 78.125e-9;     //  78.125 nV
   }
@@ -112,7 +112,7 @@ float INA228::getShuntVoltage()
   //  remove reserved bits.
   int32_t value = _readRegister(INA228_SHUNT_VOLTAGE, 3) >> 4;
   //  handle negative values
-  if (value & 0x00800000) 
+  if (value & 0x00800000)
   {
     value |= 0xFF000000;
   }
@@ -144,22 +144,24 @@ float INA228::getTemperature()
 }
 
 //  PAGE 26 + 8.1.2
-float INA228::getEnergy()
+double INA228::getEnergy()
 {
-  //  read 40 bit unsigned as a float to prevent 64 bit ints
+  //  read 40 bit unsigned as a double to prevent 64 bit ints
+  //  double might be 8 or 4 byte, depends on platform
   //  40 bit ==> O(10^12)
-  float value = _readRegisterF(INA228_ENERGY, 5);
+  double value = _readRegisterF(INA228_ENERGY, 5);
   //  PAGE 31 (8.1.2)
   return value * (16 * 3.2) * _current_LSB;
 }
 
 
 //  PAGE 26 + 8.1.2
-float INA228::getCharge()
+double INA228::getCharge()
 {
   //  read 40 bit unsigned as a float to prevent 64 bit ints
+  //  double might be 8 or 4 byte, depends on platform
   //  40 bit ==> O(10^12)
-  float value = _readRegisterF(INA228_CHARGE, 5);
+  double value = _readRegisterF(INA228_CHARGE, 5);
   //  PAGE 32 (8.1.2)
   return value * _current_LSB;
 }
@@ -335,7 +337,7 @@ int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
   //  PAGE 31 (8.1.2)
   float shunt_cal = 13107.2e6 * _current_LSB * _shunt;
   //  depends on ADCRANGE in INA228_CONFIG register.
-  if (getADCRange() == 1) 
+  if (getADCRange() == 1)
   {
     shunt_cal *= 4;
   }
@@ -544,7 +546,7 @@ uint32_t INA228::_readRegister(uint8_t reg, uint8_t bytes)
 
   _wire->requestFrom(_address, (uint8_t)bytes);
   uint32_t value = 0;
-  for ( int i = 0; i < bytes; i++)
+  for (int i = 0; i < bytes; i++)
   {
     value <<= 8;
     value |= _wire->read();
@@ -553,15 +555,15 @@ uint32_t INA228::_readRegister(uint8_t reg, uint8_t bytes)
 }
 
 
-float INA228::_readRegisterF(uint8_t reg, uint8_t bytes)
+double INA228::_readRegisterF(uint8_t reg, uint8_t bytes)
 {
   _wire->beginTransmission(_address);
   _wire->write(reg);
   _wire->endTransmission();
 
   _wire->requestFrom(_address, (uint8_t)bytes);
-  float value = 0;
-  for ( int i = 0; i < bytes; i++)
+  double value = 0;
+  for (int i = 0; i < bytes; i++)
   {
     value *= 256.0;
     value += _wire->read();

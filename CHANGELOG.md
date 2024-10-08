@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - rename **clearDiagnoseAlertBit()**
 - fix **getDieID()**
 - add **INA228_performance.ino**
+- change return type **getEnergy()** and **getCharge()** to double.
 - update readme.md
 
 ## [0.1.1] - 2024-05-15

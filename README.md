@@ -91,13 +91,13 @@ See table - from datasheet table 7-2, page 19.
 |  A1   |  A0   |  Addr  |  HEX   |   |  A1   |  A0   |  Addr  |  HEX   |
 |:-----:|:-----:|:------:|:------:|:-:|:-----:|:-----:|:------:|:------:|
 |  GND  |  GND  |   64   |  0x40  |   |  SDA  |  GND  |   72   |  0x48  |
-|  GND  |  VS   |   65   |  0x41  |   |  SDA  |  VS   |   73   |  0x49  |
+|  GND  |  VCC  |   65   |  0x41  |   |  SDA  |  VCC  |   73   |  0x49  |
 |  GND  |  SDA  |   66   |  0x42  |   |  SDA  |  SDA  |   74   |  0x4A  |
 |  GND  |  SCL  |   67   |  0x43  |   |  SDA  |  SCL  |   75   |  0x4B  |
-|  VS   |  GND  |   68   |  0x44  |   |  SCL  |  GND  |   76   |  0x4C  |
-|  VS   |  VS   |   69   |  0x45  |   |  SCL  |  VS   |   77   |  0x4D  |
-|  VS   |  SDA  |   70   |  0x46  |   |  SCL  |  SDA  |   78   |  0x4E  |
-|  VS   |  SCL  |   71   |  0x47  |   |  SCL  |  SCL  |   79   |  0x4F  |
+|  VCC  |  GND  |   68   |  0x44  |   |  SCL  |  GND  |   76   |  0x4C  |
+|  VCC  |  VCC  |   69   |  0x45  |   |  SCL  |  VCC  |   77   |  0x4D  |
+|  VCC  |  SDA  |   70   |  0x46  |   |  SCL  |  SDA  |   78   |  0x4E  |
+|  VCC  |  SCL  |   71   |  0x47  |   |  SCL  |  SCL  |   79   |  0x4F  |
 
 
 ### Performance
@@ -184,16 +184,16 @@ Helper functions for the milli scale and micro scale.
 
 See page 13++, page 32, 8.1.2
 
-- **float getEnergy()** return Joule (elaborate).
-- **float getCharge()** return Coulomb (elaborate).
+- **double getEnergy()** return Joule (elaborate).
+- **double getCharge()** return Coulomb (elaborate).
 
 Helper functions for the milli and micro scale. 
 (TODO: are these useful?)
 
-- **float getEnergy_mJ()** idem, milliJoule.
-- **float getCharge_mC()** idem, milliCoulomb.
-- **float getEnergy_uJ()** idem, microJoule.
-- **float getCharge_uC()** idem, microCoulomb.
+- **double getEnergy_mJ()** idem, milliJoule.
+- **double getCharge_mC()** idem, milliCoulomb.
+- **double getEnergy_uJ()** idem, microJoule.
+- **double getCharge_uC()** idem, microCoulomb.
 
 The **getEnergy()** and **getCharge()** only have meaning in continuous mode.
 These are accumulation registers and can be reset to zero by **setAccumulation(1)**.
