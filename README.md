@@ -108,15 +108,20 @@ Time in micros, I2C speed in kHz.
 
 |  I2C  |  function         |  time  |  notes  |
 |:-----:|:------------------|:------:|:-------:|
-|  100  |  getBusVoltage    |        |
-|  100  |  getShuntVoltage  |        |
-|  100  |  getCurrent       |        |
-|  100  |  getPower         |        |
-|  100  |  getTemperature   |        |
-|  100  |  getEnergy        |        |
-|  100  |  getCharge        |        |
+|  100  |  getBusVoltage    |   684  |  100%
+|  100  |  getShuntVoltage  |  1248  |
+|  100  |  getCurrent       |   684  |
+|  100  |  getPower         |   684  |
+|  100  |  getTemperature   |   580  |
+|  100  |  getEnergy        |   940  |
+|  100  |  getCharge        |   960  |
+|       |                   |        |  other functions similar gain.
+|  200  |  getBusVoltage    |   404  |   60%
+|  400  |  getBusVoltage    |   252  |   37%
+|  800  |  getBusVoltage    |   184  |   27%
 
-TODO: add data to table
+
+Most non core functions are as fast as **getTemperature()**
 
 
 ### I2C multiplexing

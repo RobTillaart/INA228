@@ -27,7 +27,7 @@ void setup()
     while(1);
   }
 
-  INA.setMaxCurrentShunt(10, 0.0005);
+  INA.setMaxCurrentShunt(10, 0.015);
 
 }
 

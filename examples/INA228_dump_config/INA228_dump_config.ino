@@ -27,7 +27,7 @@ void setup()
     while(1);
   }
 
-  INA.setMaxCurrentShunt(10, 0.0005);
+  INA.setMaxCurrentShunt(10, 0.015);
 
   //  REGISTER 0
   Serial.print("Accumulation: ");
@@ -54,7 +54,7 @@ void setup()
   Serial.println();
 
 
-  Serial.print("\n done");
+  Serial.print("\nDone");
 }
 
 

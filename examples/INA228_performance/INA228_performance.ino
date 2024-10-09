@@ -12,7 +12,7 @@ INA228 INA(0x40);
 
 uint32_t start, stop;
 //  volatile, to prevent optimization
-volatile float f;  
+volatile float f;
 volatile uint16_t value;
 
 
@@ -29,19 +29,27 @@ void setup()
   if (!INA.begin() )
   {
     Serial.println("Could not connect. Fix and Reboot");
-    while(1);
+    while (1);
   }
 
   INA.setMaxCurrentShunt(10, 0.0005);
 
-  //  TODO different I2C speeds: 100..800 kHz.
-  test_core();
-  test_config();
-  test_adc_config();
-  test_others();
-  test_thresholds();
- 
-  Serial.print("\n done");
+  for (long clk = 100000; clk <= 800000; clk *= 2)
+  {
+    //  setup and measure
+    Wire.setClock(clk);
+    Serial.println("\n========================================================");
+    Serial.print("Speed: ");
+    Serial.println(clk);
+    delay(100);
+    test_core();
+    //    test_config();
+    //    test_adc_config();
+    //    test_others();
+    //    test_thresholds();
+  }
+
+  Serial.print("\nDone");
 }
 
 
@@ -55,7 +63,7 @@ void test_core()
   Serial.println();
   Serial.println(__FUNCTION__);
   delay(10);
-  
+
   start = micros();
   f = INA.getBusVoltage();
   stop = micros();
@@ -63,7 +71,7 @@ void test_core()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   f = INA.getShuntVoltage();
   stop = micros();
@@ -71,7 +79,7 @@ void test_core()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   f = INA.getCurrent();
   stop = micros();
@@ -79,7 +87,7 @@ void test_core()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   f = INA.getPower();
   stop = micros();
@@ -87,7 +95,7 @@ void test_core()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   f = INA.getTemperature();
   stop = micros();
@@ -95,7 +103,7 @@ void test_core()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   f = INA.getEnergy();
   stop = micros();
@@ -103,7 +111,7 @@ void test_core()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   f = INA.getCharge();
   stop = micros();
@@ -120,7 +128,7 @@ void test_config()
   Serial.println();
   Serial.println(__FUNCTION__);
   delay(10);
-  
+
   start = micros();
   value = INA.getAccumulation();
   stop = micros();
@@ -128,7 +136,7 @@ void test_config()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getConversionDelay();
   stop = micros();
@@ -136,7 +144,7 @@ void test_config()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getTemperatureCompensation();
   stop = micros();
@@ -144,7 +152,7 @@ void test_config()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getADCRange();
   stop = micros();
@@ -161,7 +169,7 @@ void test_adc_config()
   Serial.println();
   Serial.println(__FUNCTION__);
   delay(10);
-  
+
   start = micros();
   value = INA.getMode();
   stop = micros();
@@ -169,7 +177,7 @@ void test_adc_config()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getBusVoltageConversionTime();
   stop = micros();
@@ -177,7 +185,7 @@ void test_adc_config()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getShuntVoltageConversionTime();
   stop = micros();
@@ -185,7 +193,7 @@ void test_adc_config()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getTemperatureConversionTime();
   stop = micros();
@@ -193,7 +201,7 @@ void test_adc_config()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
- 
+
   start = micros();
   value = INA.getAverage();
   stop = micros();
@@ -210,7 +218,7 @@ void test_others()
   Serial.println();
   Serial.println(__FUNCTION__);
   delay(10);
-  
+
   start = micros();
   value = INA.getShuntTemperatureCoefficent();
   stop = micros();
@@ -218,7 +226,7 @@ void test_others()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getDiagnoseAlert();
   stop = micros();
@@ -235,7 +243,7 @@ void test_thresholds()
   Serial.println();
   Serial.println(__FUNCTION__);
   delay(10);
-  
+
   start = micros();
   value = INA.getShuntOvervoltageTH();
   stop = micros();
@@ -243,7 +251,7 @@ void test_thresholds()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getShuntUndervoltageTH();
   stop = micros();
@@ -251,7 +259,7 @@ void test_thresholds()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
- 
+
   start = micros();
   value = INA.getBusOvervoltageTH();
   stop = micros();
@@ -259,7 +267,7 @@ void test_thresholds()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getBusUndervoltageTH();
   stop = micros();
@@ -267,7 +275,7 @@ void test_thresholds()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
- 
+
   start = micros();
   value = INA.getTemperatureOverLimitTH();
   stop = micros();
@@ -275,7 +283,7 @@ void test_thresholds()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getPowerOverLimitTH();
   stop = micros();
@@ -292,7 +300,7 @@ void test_manufactur_die()
   Serial.println();
   Serial.println(__FUNCTION__);
   delay(10);
-  
+
   start = micros();
   value = INA.getManufacturer();
   stop = micros();
@@ -300,7 +308,7 @@ void test_manufactur_die()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
-  
+
   start = micros();
   value = INA.getDieID();
   stop = micros();
@@ -308,7 +316,7 @@ void test_manufactur_die()
   Serial.print(stop - start);
   Serial.println();
   delay(10);
- 
+
   start = micros();
   value = INA.getRevision();
   stop = micros();

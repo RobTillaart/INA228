@@ -515,7 +515,7 @@ uint16_t INA228::getPowerOverLimitTH()
 //
 //  MANUFACTURER and ID REGISTER 3E/3F
 //
-bool INA228::getManufacturer()
+uint16_t INA228::getManufacturer()
 {
   uint16_t value = _readRegister(INA228_MANUFACTURER, 2);
   return value;
