@@ -1,9 +1,12 @@
 //    FILE: INA228.cpp
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.2
+// VERSION: 0.1.3
 //    DATE: 2024-05-09
 // PURPOSE: Arduino library for INA228 voltage, current and power sensor.
 //     URL: https://github.com/RobTillaart/INA228
+//          https://www.adafruit.com/product/5832           ( 10 A version)
+//          https://www.mateksys.com/?portfolio=i2c-ina-bm  (200 A version))
+
 //
 //  Read the datasheet for the details
 
@@ -124,7 +127,8 @@ float INA228::getCurrent()
 {
   //  remove reserved bits.
   uint32_t value = _readRegister(INA228_CURRENT, 3) >> 4;
-  return value * _current_LSB;
+  float current = value * _current_LSB;
+  return current;
 }
 
 //  PAGE 26 + 8.1.2
@@ -328,7 +332,7 @@ uint8_t INA228::getAverage()
 //
 int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
 {
-  if (maxCurrent > 10) return -1;  //  TODO error code
+  //  Shunt can be really small
   if (shunt < 0.0001) return -2;   //  TODO error code
   _maxCurrent = maxCurrent;
   _shunt = shunt;
