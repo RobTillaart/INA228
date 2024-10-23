@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.1.3] - 2024-10-22
 - fix #10, remove limit for the Amperes, kudos to geoFrancis
+- fix handling negative values for **getShuntVoltage()**
+- fix handling negative values for **getCurrent()**
 - update readme.md
 - add **INA228_demo_two_devices.ino**
 - minor edits.

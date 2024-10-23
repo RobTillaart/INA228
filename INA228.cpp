@@ -95,38 +95,44 @@ uint8_t INA228::getAddress()
 //  PAGE 25
 float INA228::getBusVoltage()
 {
-  uint32_t value = _readRegister(INA228_BUS_VOLTAGE, 3);
-  //  remove reserved bits.
-  value >>= 4;
-  float LSB = 195.3125e-6;  //  195.3125 uV
-  return value * LSB;
+  //  always positive, remove reserved bits.
+  int32_t value = _readRegister(INA228_BUS_VOLTAGE, 3) >> 4;
+  float bus_LSB = 195.3125e-6;  //  195.3125 uV
+  float voltage = value * bus_LSB;
+  return voltage;
 }
 
 //  PAGE 25
 float INA228::getShuntVoltage()
 {
-  //  LSB depends on ADCRANGE in INA228_CONFIG register.
-  float LSB = 312.5e-9;  //  312.5 nV
+  //  shunt_LSB depends on ADCRANGE in INA228_CONFIG register.
+  float shunt_LSB = 312.5e-9;  //  312.5 nV
   if (getADCRange() == 1)
   {
-    LSB = 78.125e-9;     //  78.125 nV
+    shunt_LSB = 78.125e-9;     //  78.125 nV
   }
 
   //  remove reserved bits.
   int32_t value = _readRegister(INA228_SHUNT_VOLTAGE, 3) >> 4;
-  //  handle negative values
-  if (value & 0x00800000)
+  //  handle negative values (20 bit)
+  if (value & 0x00080000)
   {
-    value |= 0xFF000000;
+    value |= 0xFFF00000;
   }
-  return value * LSB;
+  float voltage = value * shunt_LSB;
+  return voltage;
 }
 
 //  PAGE 25 + 8.1.2
 float INA228::getCurrent()
 {
   //  remove reserved bits.
-  uint32_t value = _readRegister(INA228_CURRENT, 3) >> 4;
+  int32_t value = _readRegister(INA228_CURRENT, 3) >> 4;
+  //  handle negative values (20 bit)
+  if (value & 0x00080000)
+  {
+    value |= 0xFFF00000;
+  }
   float current = value * _current_LSB;
   return current;
 }

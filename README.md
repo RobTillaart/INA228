@@ -235,10 +235,13 @@ Returns true if the INA228 address is on the I2C bus.
 Note the power and the current are not meaningful without calibrating the sensor.
 Also the values are not meaningful if there is no shunt connected.
 
-- **float getShuntVoltage()** idem, in volts.
-- **float getBusVoltage()** idem. in volts. Max 85 Volt.
-- **float getCurrent()** is the current through the shunt in Ampere.
-- **float getPower()** is the current x BusVoltage in Watt.
+- **float getBusVoltage()** idem. Returns value in volts. Max 85 Volt.
+This value is always positive.
+- **float getShuntVoltage()** idem, Returns value in volts.
+Note the value can be positive or negative as the INA228 is bidirectional.
+- **float getCurrent()** returns the current through the shunt in Ampere.
+Note this value can be positive or negative as the INA228 is bidirectional.
+- **float getPower()** returns the current x BusVoltage in Watt.
 
 The library has helper/scaling functions to convert above output values to a 
 more appropriate scale of units. (to be verified if meaningful)
