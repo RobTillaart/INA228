@@ -22,16 +22,15 @@ void setup() {
   Serial.println();
 
   Wire.begin();
-  if (!INA1.begin()) {
-    Serial.println("Could not connect. Fix and Reboot");
-    while (1)
-      ;
+  if (!INA1.begin())
+  {
+    Serial.println("Could not connect INA1. Fix and Reboot");
+    while (1);
   }
-
-    if (!INA2.begin()) {
-    Serial.println("Could not connect. Fix and Reboot");
-    while (1)
-      ;
+  if (!INA2.begin())
+  {
+    Serial.println("Could not connect INA2. Fix and Reboot");
+    while (1);
   }
 
   INA1.setMaxCurrentShunt(10, 0.0002);
