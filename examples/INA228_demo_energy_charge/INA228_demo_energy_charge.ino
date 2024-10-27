@@ -35,7 +35,7 @@ void setup()
 
 void loop()
 {
-  Serial.println("\nVBUS\tVSHUNT\tCURRENT\tPOWER\tTEMP\tJOULE\tCOULOMB");
+  Serial.println("\nVBUS\tVSHUNT\tCURRENT\tPOWER\tTEMP\tJOULE\tCOULOMB\tWatt-hour");
   for (int i = 0; i < 20; i++)
   {
     Serial.print(INA.getBusVoltage(), 3);
@@ -46,11 +46,14 @@ void loop()
     Serial.print("\t");
     Serial.print(INA.getPower_mW(), 3);
     Serial.print("\t");
+    Serial.print(INA.getTemperature(), 3);
+    Serial.print("\t");
     Serial.print(INA.getEnergy(), 8);  //  how many decimals valid
     Serial.print("\t");
     Serial.print(INA.getCharge(), 8);
     Serial.print("\t");
-    Serial.print(INA.getTemperature(), 3);
+    Serial.print(INA.getEnergy()/3600);
+    Serial.print("\t");
     Serial.println();
     delay(1000);
   }
