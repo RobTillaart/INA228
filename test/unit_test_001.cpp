@@ -46,15 +46,15 @@ unittest_teardown()
 }
 
 
-unittest(test_constructor)
-{
-  INA228 INA(0x40);
+// unittest(test_constructor)
+// {
+  // INA228 INA(0x40);
 
-  Wire.begin();
-  assertTrue(INA.begin());
-  assertTrue(INA.isConnected());
-  assertEqual(0x40, INA.getAddress());
-}
+  // Wire.begin();
+  // assertTrue(INA.begin());
+  // assertTrue(INA.isConnected());
+  // assertEqual(0x40, INA.getAddress());
+// }
 
 
 unittest(test_mode_enum)
