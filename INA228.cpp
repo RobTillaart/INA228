@@ -353,7 +353,7 @@ int INA228::setMaxCurrentShunt(float maxCurrent, float shunt)
   //  PAGE 31 (8.1.2)
   float shunt_cal = 13107.2e6 * _current_LSB * _shunt;
   //  depends on ADCRANGE in INA228_CONFIG register.
-  if (getADCRange() == 1)
+  if (_ADCRange == true)
   {
     shunt_cal *= 4;
   }
