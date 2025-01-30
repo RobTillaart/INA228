@@ -322,7 +322,7 @@ Read datasheet for details, section 7.6.1.1, page 22
 - **void setTemperatureCompensation(bool on)** see Shunt temperature coefficient below.
 - **bool getTemperatureCompensation()** return set value.
 - **void setADCRange(bool flag)** flag = false => 164 mV, true => 41 mV
-- **bool getADCRange()** return set value from cache.
+- **bool getADCRange()** return set value.
 
 TODO: wrapper + better name for setAccumulation().
 

@@ -72,8 +72,7 @@ bool INA228::begin()
 {
   if (! isConnected()) return false;
 
-  uint16_t value = _readRegister(INA228_CONFIG, 2);
-  _ADCRange = (value & INA228_CFG_ADCRANGE) > 0;
+  getADCRange();
   return true;
 }
 
@@ -249,7 +248,8 @@ void INA228::setADCRange(bool flag)
 bool INA228::getADCRange()
 {
   uint16_t value = _readRegister(INA228_CONFIG, 2);
-  return (value & INA228_CFG_ADCRANGE) > 0;
+  _ADCRange = (value & INA228_CFG_ADCRANGE) > 0;
+  return _ADCRange;
 }
 
 

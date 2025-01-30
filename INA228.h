@@ -163,7 +163,7 @@ public:
   bool     getTemperatureCompensation();
   //  flag = false => 164 mV, true => 41 mV
   void     setADCRange(bool flag);
-  bool     getADCRange();  //  from cache
+  bool     getADCRange();
 
   //
   //  CONFIG ADC REGISTER 1
