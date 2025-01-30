@@ -2,8 +2,8 @@
 //    FILE: unit_test_001.cpp
 //  AUTHOR: Rob Tillaart
 //    DATE: 2021-05-18
-// PURPOSE: unit tests for the INA226 library
-//          https://github.com/RobTillaart/INA226
+// PURPOSE: unit tests for the INA228 library
+//          https://github.com/RobTillaart/INA228
 //          https://github.com/Arduino-CI/arduino_ci/blob/master/REFERENCE.md
 //
 
