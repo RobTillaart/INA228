@@ -250,8 +250,8 @@ public:
 private:
   //  max 4 bytes
   uint32_t _readRegister(uint8_t reg, uint8_t bytes);
-  //  5 bytes or more
-  double   _readRegisterF(uint8_t reg, uint8_t bytes);
+  //  always 5 bytes
+  double   _readRegisterF(uint8_t reg);
   uint16_t _writeRegister(uint8_t reg, uint16_t value);
 
   float    _current_LSB;
