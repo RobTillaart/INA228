@@ -7,9 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [0.2.0] - 2025-03-05
-- fix INA.getCharge => make it signed.
+- fix #20, INA.getCharge => make it signed.
 - add **getLastError()** low level (I2C) error handling
-- fix #20, 
 
 ----
 
