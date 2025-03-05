@@ -65,6 +65,7 @@ INA228::INA228(const uint8_t address, TwoWire *wire)
   _shunt       = 0.015;
   _maxCurrent  = 10.0;
   _current_LSB = _maxCurrent * pow(2, -19);
+  _error       = 0;
 }
 
 
