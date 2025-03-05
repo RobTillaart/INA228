@@ -1,7 +1,7 @@
 #pragma once
 //    FILE: INA228.h
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.5
+// VERSION: 0.1.6
 //    DATE: 2024-05-09
 // PURPOSE: Arduino library for the INA228, I2C, 20 bit, voltage, current and power sensor.
 //     URL: https://github.com/RobTillaart/INA228
@@ -16,7 +16,7 @@
 #include "Wire.h"
 
 
-#define INA228_LIB_VERSION          (F("0.1.5"))
+#define INA228_LIB_VERSION          (F("0.1.6"))
 
 
 //  for setMode() and getMode()
@@ -242,6 +242,10 @@ public:
   uint16_t getDieID();         //  0x0228
   uint16_t getRevision();      //  0x0001
 
+  //
+  //  ERROR HANDLING
+  //
+  int      getLastError();
 
 private:
   //  max 4 bytes
@@ -257,6 +261,8 @@ private:
 
   uint8_t   _address;
   TwoWire * _wire;
+
+  int       _error;
 };
 
 

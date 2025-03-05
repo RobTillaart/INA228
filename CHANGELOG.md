@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.6] - 2025-03-05
+- add **getLastError()** low level (I2C) error handling
+
+
 ## [0.1.5] - 2025-01-30
 - fix #17, cache ADCRange to improve getShuntVoltage()
 - add **INA_comparison_table.md**

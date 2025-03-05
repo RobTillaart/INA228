@@ -1,6 +1,6 @@
 //    FILE: INA228.cpp
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.5
+// VERSION: 0.1.6
 //    DATE: 2024-05-09
 // PURPOSE: Arduino library for the INA228, I2C, 20 bit, voltage, current and power sensor.
 //     URL: https://github.com/RobTillaart/INA228
@@ -552,20 +552,45 @@ uint16_t INA228::getRevision()
 
 ////////////////////////////////////////////////////////
 //
-//  SHOULD BE PRIVATE
+//  ERROR HANDLING
+//
+int INA228::getLastError()
+{
+  int e = _error;
+  _error = 0;
+  return e;
+}
+
+
+////////////////////////////////////////////////////////
+//
+//  PRIVATE
 //
 uint32_t INA228::_readRegister(uint8_t reg, uint8_t bytes)
 {
+  _error = 0;
   _wire->beginTransmission(_address);
   _wire->write(reg);
-  _wire->endTransmission();
-
-  _wire->requestFrom(_address, (uint8_t)bytes);
-  uint32_t value = 0;
-  for (int i = 0; i < bytes; i++)
+  int n = _wire->endTransmission();
+  if (n != 0)
   {
-    value <<= 8;
-    value |= _wire->read();
+    _error = -1;
+    return 0;
+  }
+
+  uint32_t value = 0;
+  if (bytes == _wire->requestFrom(_address, (uint8_t)bytes))
+  {
+    for (int i = 0; i < bytes; i++)
+    {
+      value <<= 8;
+      value |= _wire->read();
+    }
+  }
+  else
+  {
+    _error = -2;
+    return 0;
   }
   return value;
 }
@@ -573,16 +598,29 @@ uint32_t INA228::_readRegister(uint8_t reg, uint8_t bytes)
 
 double INA228::_readRegisterF(uint8_t reg, uint8_t bytes)
 {
+  _error = 0;
   _wire->beginTransmission(_address);
   _wire->write(reg);
-  _wire->endTransmission();
-
-  _wire->requestFrom(_address, (uint8_t)bytes);
-  double value = 0;
-  for (int i = 0; i < bytes; i++)
+  int n = _wire->endTransmission();
+  if (n != 0)
   {
-    value *= 256.0;
-    value += _wire->read();
+    _error = -1;
+    return 0;
+  }
+
+  double value = 0;
+  if (bytes == _wire->requestFrom(_address, (uint8_t)bytes))
+  {
+    for (int i = 0; i < bytes; i++)
+    {
+      value *= 256.0;
+      value += _wire->read();
+    }
+  }
+  else
+  {
+    _error = -2;
+    return 0;
   }
   return value;
 }
@@ -594,7 +632,12 @@ uint16_t INA228::_writeRegister(uint8_t reg, uint16_t value)
   _wire->write(reg);
   _wire->write(value >> 8);
   _wire->write(value & 0xFF);
-  return _wire->endTransmission();
+  int n = _wire->endTransmission();
+  if (n != 0)
+  {
+    _error = -1;
+  }
+  return n;
 }
 
 
