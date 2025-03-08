@@ -611,7 +611,6 @@ double INA228::_readRegisterF(uint8_t reg, char mode)
   }
 
   double value = 0;
-  uint32_t val = 0;
   if (5 == _wire->requestFrom(_address, (uint8_t)5))
   {
     uint32_t val = 0;
