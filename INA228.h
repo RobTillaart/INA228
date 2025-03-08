@@ -250,7 +250,7 @@ public:
 private:
   //  max 4 bytes
   uint32_t _readRegister(uint8_t reg, uint8_t bytes);
-  //  always 5 bytes
+  //  always 5 bytes, mode == U ==> unsigned, otherwise signed
   double   _readRegisterF(uint8_t reg, char mode);
   uint16_t _writeRegister(uint8_t reg, uint16_t value);
 
