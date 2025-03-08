@@ -611,41 +611,24 @@ double INA228::_readRegisterF(uint8_t reg, char mode)
   }
 
   double value = 0;
+  uint32_t val = 0;
   if (5 == _wire->requestFrom(_address, (uint8_t)5))
   {
-    if (mode == 'U')  //  unsigned
+    uint32_t val = 0;
+    //  fetch 4 MSB bytes first.
+    for (int i = 0; i < 4; i++)
     {
-      uint32_t val = 0;
-      //  fetch 4 MSB bytes first.
-      for (int i = 0; i < 4; i++)
-      {
-        val <<= 8;
-        val |= _wire->read();
-      }
-      value = val;
+      val <<= 8;
+      val |= _wire->read();
     }
-    else  //  SIGNED
-    {
-      int32_t val = 0;
-      //  fetch 4 MSB bytes first.
-      for (int i = 0; i < 4; i++)
-      {
-        val <<= 8;
-        val |= _wire->read();
-      }
-      value = val;
-    }
+    //  handle signed / unsigned by casting.
+    if (mode == 'U') value = val;
+    else             value = (int32_t) val;
+    //  process last byte
     value *= 256;
     //  note: mar05c
     uint8_t n = _wire->read();
     value += n;
-
-    //  ORG
-    // for (int i = 0; i < bytes; i++)
-    // {
-      // value *= 256.0;
-      // value += _wire->read();
-    // }
   }
   else
   {
