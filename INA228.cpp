@@ -244,6 +244,8 @@ void INA228::setADCRange(bool flag)
   else      value &= ~INA228_CFG_ADCRANGE;
   //  if value has not changed we do not need to write it back.
   _writeRegister(INA228_CONFIG, value);
+  // Fix the issue where shunt_cal was not modified
+  setMaxCurrentShunt(getMaxCurrent(), getShunt());
 }
 
 bool INA228::getADCRange()
