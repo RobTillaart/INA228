@@ -167,7 +167,7 @@ public:
   void     setTemperatureCompensation(bool on);
   bool     getTemperatureCompensation();
   //  flag = false => 164 mV, true => 41 mV
-  void     setADCRange(bool flag);
+  bool     setADCRange(bool flag);
   bool     getADCRange();
 
   //
