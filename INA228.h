@@ -141,8 +141,8 @@ public:
   double   getKiloJoule()       { return getEnergy()       * 1e-3; };
   double   getMilliJoule()      { return getEnergy()       * 1e3; };
   double   getMicroJoule()      { return getEnergy()       * 1e6; };
-  double   getWattHour()        { return getEnergy()       * (1.0 / 3600.0); };
-  double   getKiloWattHour()    { return getEnergy()       * (1.0 / 3.6); };
+  double   getWattHour()        { return getEnergy()       * (1.0  / 3600.0); };
+  double   getKiloWattHour()    { return getEnergy()       * (1e-3 / 3600.0); };
 
   //       CHARGE
   double   getCharge();         //  Coulombs
